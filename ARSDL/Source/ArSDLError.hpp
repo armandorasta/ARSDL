@@ -24,7 +24,22 @@ namespace ArSDL {
 	};
 }
 
-#define ARSDL_ERROR_HANDLE_NEG(_call)  \
-	if (0        > _call) throw ArSDLError{#_call, __FILE__, static_cast<std::size_t>(__LINE__)}
-#define ARSDL_ERROR_HANDLE_NULL(_call) \
-	if (nullptr == _call) throw ArSDLError{#_call, __FILE__, static_cast<std::size_t>(__LINE__)}
+#define ARSDL_ERROR_THROW_IF(_cond)  \
+	if (_cond) throw ArSDLError{#_cond, __FILE__, static_cast<std::size_t>(__LINE__)}
+
+#define ARSDL_ERROR_HANDLE_NEG(_call)  ARSDL_ERROR_THROW_IF((_call) < 0)
+#define ARSDL_ERROR_HANDLE_NULL(_call) ARSDL_ERROR_THROW_IF((_call) == nullptr)
+
+#ifdef ARSDL_DEBUG_MODE
+
+#define ARSDL_ERROR_DEBUG_THROW_IF(_cond)    ARSDL_ERROR_THROW_IF(_cond)
+#define ARSDL_ERROR_DEBUG_HANDLE_NEG(_call)  ARSDL_ERROR_HANDLE_NEG(_call)
+#define ARSDL_ERROR_DEBUG_HANDLE_NULL(_call) ARSDL_ERROR_HANDLE_NULL(_call)
+
+#elif // ^^^^ ARSDL_DEBUG_MODE vvvv !ARSDL_DEBUG_MODE
+
+#define ARSDL_ERROR_DEBUG_THROW_IF(_cond)
+#define ARSDL_ERROR_DEBUG_HANDLE_NEG(_call)
+#define ARSDL_ERROR_DEBUG_HANDLE_NULL(_call)
+
+#endif

@@ -34,16 +34,19 @@ public:
 		while (auto optEv{PollNextEvent()})
 		{
 			auto& ev{*optEv};
-			switch (static_cast<sdl::EventType>(ev.type))
+			switch (ev.GetType())
 			{
 			case sdl::EventType::KeyDown:
-				if (static_cast<sdl::KeyCode>(ev.key.keysym.sym) == sdl::KeyCode::Space)
+			{
+				auto const keyEv{ev.AsKeyboardEvent()};
+				if (keyEv == sdl::Keycode::Space)
 				{
 					clearColor = clearColor == sdl::Colors::Cyan
 						? sdl::Colors::Green
 						: sdl::Colors::Cyan;
 				}
 				break;
+			}
 			default:
 				IgnoreLastEvent();
 				break;

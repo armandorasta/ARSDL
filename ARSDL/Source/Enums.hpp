@@ -77,7 +77,7 @@ namespace ArSDL {
 		BottomToTop = TTF_DIRECTION_BTT,
 	};
 
-	enum EventType 
+	enum class EventType 
 	{
 		Quit            = SDL_QUIT,
 		Terminate       = SDL_APP_TERMINATING,
@@ -91,7 +91,7 @@ namespace ArSDL {
 		MouseWheel      = SDL_MOUSEWHEEL,
 	};
 
-	enum EventCategory
+	enum class EventCategory
 	{
 		App,
 		Keyboard,
@@ -101,6 +101,7 @@ namespace ArSDL {
 	constexpr EventCategory GetEventCategory(EventType evType)
 	{
 		switch (evType) {
+			using enum EventType;
 		case Quit:
 		case Terminate:
 		case WindowEvent:
@@ -119,17 +120,58 @@ namespace ArSDL {
 		}
 	}
 
-	enum MessageBoxFlag
+	enum class MessageBoxFlag
 	{
 		Info    = SDL_MESSAGEBOX_INFORMATION,
 		Warning = SDL_MESSAGEBOX_WARNING,
 		Error   = SDL_MESSAGEBOX_ERROR,
 	};
 
+	enum class WindowEventID
+	{
+		Shown               = SDL_WINDOWEVENT_SHOWN,
+		Hidden              = SDL_WINDOWEVENT_HIDDEN,
+		Exposed             = SDL_WINDOWEVENT_EXPOSED,
+		Moved               = SDL_WINDOWEVENT_MOVED,
+		Resized             = SDL_WINDOWEVENT_RESIZED,
+		SizeChanged         = SDL_WINDOWEVENT_SIZE_CHANGED,
+		Minimized           = SDL_WINDOWEVENT_MINIMIZED,
+		Maximized           = SDL_WINDOWEVENT_MAXIMIZED,
+		Restored            = SDL_WINDOWEVENT_RESTORED,
+		MouseEnter          = SDL_WINDOWEVENT_ENTER,
+		MouseLeave          = SDL_WINDOWEVENT_LEAVE,
+		KeyboardFocusGained = SDL_WINDOWEVENT_FOCUS_GAINED,
+		KeyboardFocusLost   = SDL_WINDOWEVENT_FOCUS_LOST,
+		Close               = SDL_WINDOWEVENT_CLOSE,
+		TakeFocus           = SDL_WINDOWEVENT_TAKE_FOCUS,
+		HitTest             = SDL_WINDOWEVENT_HIT_TEST,
+	};
+
+	enum class Keymod
+	{
+		LeftShift  = KMOD_LSHIFT,
+		RightShift = KMOD_RSHIFT,
+		LeftCtrl   = KMOD_LCTRL,
+		RightCtrl  = KMOD_RCTRL,
+		LeftAlt    = KMOD_LALT,
+		RightAlt   = KMOD_RALT,
+		LeftGui    = KMOD_LGUI,
+		RightGui   = KMOD_RGUI,
+		NumLock    = KMOD_NUM,
+		CapsLock   = KMOD_CAPS,
+		Mode       = KMOD_MODE,
+		ScrollLock = KMOD_SCROLL,
+
+		Ctrl  = LeftCtrl  | RightCtrl,
+		Shift = LeftShift | RightShift,
+		Alt   = LeftAlt   | RightAlt,
+		Gui   = LeftGui   | RightGui,
+	};
+
 	// The original SDL enum contains some keys that are not present here; I did not include them 
 	// either because I do not see them in my keyboard, or because they can be looked up directly 
 	// by using their glyph.
-	enum class KeyCode
+	enum class Keycode
 	{
 		Return         = SDLK_RETURN,
 		Escape         = SDLK_ESCAPE,

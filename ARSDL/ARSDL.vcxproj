@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Color.cpp" />
     <ClCompile Include="Source\Engine.cpp" />
+    <ClCompile Include="Source\Event.cpp" />
     <ClCompile Include="Source\Font.cpp" />
     <ClCompile Include="Source\Renderer.cpp" />
     <ClCompile Include="Source\Surface.cpp" />

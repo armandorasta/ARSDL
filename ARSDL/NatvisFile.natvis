@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+	<Type Name="ArSDL::FPoint">
+		<DisplayString>{{ x={x} y={y} }}</DisplayString>
+	</Type>
+	
+	<Type Name="ArSDL::Point">
+		<DisplayString>{{ x={x} y={y} }}</DisplayString>
+	</Type>
+
+	<Type Name="ArSDL::FRect">
+		<DisplayString>{{ x={x} y={y} w={w} h={h} }}</DisplayString>
+	</Type>
+
+	<Type Name="ArSDL::Rect">
+		<DisplayString>{{ x={x} y={y} w={w} h={h} }}</DisplayString>
+	</Type>
+
+	<Type Name="ArSDL::Color">
+		<DisplayString>{{ r={r} g={g} b={b} a={a} }}</DisplayString>
+	</Type>
+
+	<Type Name="ArSDL::ArSDLError">
+		<DisplayString>{{ msg={m_message}: {m_sdlMessage} line={m_line} file={m_file} }}</DisplayString>
+	</Type>
+
+	<Type Name="ArSDL::ArGenericError">
+		<DisplayString>{{ msg={m_message} }}</DisplayString>
+	</Type>
+</AutoVisualizer>

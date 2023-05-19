@@ -8,6 +8,12 @@ namespace ArSDL {
 	class Color : public SDL_Color
 	{
 	public:
+		constexpr Color(Color const&)            = default;
+		constexpr Color(Color&&)                 = default;
+		constexpr Color& operator=(Color const&) = default;
+		constexpr Color& operator=(Color&&)      = default;
+
+		constexpr Color() : SDL_Color{0, 0, 0, 0} { }
 		constexpr Color(uint32_t compact) : Color{ 
 			// BGRA.
 			static_cast<uint8_t>((compact >> 16) & 0xFF),

@@ -46,11 +46,15 @@ namespace ArSDL {
 			for (;;)
 			{
 				auto const frameDelta{GetFrameDelta()};
+				// Display the juicy ass frame rate and delta.
+				// This was a direct copy + paste from ArEngine2D xd.
 				UpdateTitle(frameDelta);
 
-				OnUpdate(frameDelta);
-				// Let the user handle his events first.
+				// Update mouse and keyboard (this does not interact with the event queue).
+				UpdateInput();
 				HandleEvents();
+
+				OnUpdate(frameDelta);
 				m_pRenderer->Present();
 			}
 		} 
@@ -106,24 +110,35 @@ namespace ArSDL {
 	void Engine::HandleEvents()
 	{
 		SDL_Event ev{ };
-		while (SDL_PollEvent(&ev)) switch (static_cast<EventType>(ev.type)) 
+		while (SDL_PollEvent(&ev)) 
 		{
-		case EventType::Quit:
-		case EventType::Terminate:
-			std::exit(0);
-			break;
+			if (ev.type == SDL_QUIT || ev.type == SDL_APP_TERMINATING)
+				std::exit(0);
+			else
+				SDL_PushEvent(&ev);
 		}
 	}
-	
-	Engine::MouseState Engine::GetMouseState() const
+
+	void Engine::UpdateInput()
 	{
-		int x, y;
-		auto const buttFlags{SDL_GetMouseState(&x, &y)};
-		return {
-			.pos{static_cast<float>(x), static_cast<float>(y)},
-			.bLeft = static_cast<bool>(buttFlags & SDL_BUTTON_LMASK),
-			.bMid = static_cast<bool>(buttFlags & SDL_BUTTON_MMASK),
-			.bRight = static_cast<bool>(buttFlags & SDL_BUTTON_RMASK),
-		};
+		m_mouse.Update();
+		m_keyboard.Update();
+	}
+
+	std::optional<Event> Engine::PollNextEvent()
+	{
+		if (SDL_PollEvent(&m_optEventCache->GetRawAccess()))
+		{
+			return m_optEventCache;
+		} 
+		else
+		{
+			return { };
+		}
+	}
+
+	void Engine::IgnoreLastEvent()
+	{
+		SDL_PushEvent(&m_optEventCache->GetRawAccess());
 	}
 }

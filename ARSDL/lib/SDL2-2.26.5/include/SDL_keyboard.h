@@ -97,7 +97,7 @@ extern DECLSPEC const Uint8 *SDLCALL SDL_GetKeyboardState(int *numkeys);
 /**
  * Clear the state of the keyboard
  *
- * This function will generate key up events for all pressed keys.
+ * This function will generate key up events for all pressed m_keys.
  *
  * \since This function is available since SDL 2.24.0.
  *
@@ -108,7 +108,7 @@ extern DECLSPEC void SDLCALL SDL_ResetKeyboard(void);
 /**
  * Get the current key modifier state for the keyboard.
  *
- * \returns an OR'd combination of the modifier keys for the keyboard. See
+ * \returns an OR'd combination of the modifier m_keys for the keyboard. See
  *          SDL_Keymod for details.
  *
  * \since This function is available since SDL 2.0.0.

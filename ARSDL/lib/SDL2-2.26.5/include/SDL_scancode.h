@@ -33,7 +33,7 @@
 /**
  *  \brief The SDL keyboard scancode representation.
  *
- *  Values of this type are used to represent keyboard keys, among other places
+ *  Values of this type are used to represent keyboard m_keys, among other places
  *  in the \link SDL_Keysym::scancode key.keysym.scancode \endlink field of the
  *  SDL_Event structure.
  *
@@ -347,7 +347,7 @@ typedef enum
      *  These values are mapped from usage page 0x0C (USB consumer page).
      *  See https://usb.org/sites/default/files/hut1_2.pdf
      *
-     *  There are way more keys in the spec than we can represent in the
+     *  There are way more m_keys in the spec than we can represent in the
      *  current scancode range, so pick the ones that commonly come up in
      *  real world usage.
      */
@@ -374,7 +374,7 @@ typedef enum
     /* @} *//* Usage page 0x0C */
 
     /**
-     *  \name Walther keys
+     *  \name Walther m_keys
      *
      *  These are values that Christian Walther added (for mac keyboard?).
      */
@@ -393,10 +393,10 @@ typedef enum
     SDL_SCANCODE_APP1 = 283,
     SDL_SCANCODE_APP2 = 284,
 
-    /* @} *//* Walther keys */
+    /* @} *//* Walther m_keys */
 
     /**
-     *  \name Usage page 0x0C (additional media keys)
+     *  \name Usage page 0x0C (additional media m_keys)
      *
      *  These values are mapped from usage page 0x0C (USB consumer page).
      */
@@ -405,10 +405,10 @@ typedef enum
     SDL_SCANCODE_AUDIOREWIND = 285,
     SDL_SCANCODE_AUDIOFASTFORWARD = 286,
 
-    /* @} *//* Usage page 0x0C (additional media keys) */
+    /* @} *//* Usage page 0x0C (additional media m_keys) */
 
     /**
-     *  \name Mobile keys
+     *  \name Mobile m_keys
      *
      *  These are values that are often used on mobile phones.
      */
@@ -425,9 +425,9 @@ typedef enum
     SDL_SCANCODE_CALL = 289, /**< Used for accepting phone calls. */
     SDL_SCANCODE_ENDCALL = 290, /**< Used for rejecting phone calls. */
 
-    /* @} *//* Mobile keys */
+    /* @} *//* Mobile m_keys */
 
-    /* Add any other keys here. */
+    /* Add any other m_keys here. */
 
     SDL_NUM_SCANCODES = 512 /**< not a key, just marks the number of scancodes
                                  for array bounds */

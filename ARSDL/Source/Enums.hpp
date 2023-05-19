@@ -168,7 +168,7 @@ namespace ArSDL {
 		Gui   = LeftGui   | RightGui,
 	};
 
-	// The original SDL enum contains some keys that are not present here; I did not include them 
+	// The original SDL enum contains some m_keys that are not present here; I did not include them 
 	// either because I do not see them in my keyboard, or because they can be looked up directly 
 	// by using their glyph.
 	enum class Keycode

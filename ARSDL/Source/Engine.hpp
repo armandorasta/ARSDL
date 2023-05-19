@@ -5,6 +5,8 @@
 #include "Window.hpp"
 #include "Renderer.hpp"
 #include "Event.hpp"
+#include "Keyboard.hpp"
+#include "Mouse.hpp"
 
 namespace ArSDL {
 	class Engine
@@ -17,48 +19,27 @@ namespace ArSDL {
 			size_t height;
 		};
 
-		struct MouseState
-		{
-			FPoint pos;
-			bool bLeft;
-			bool bMid;
-			bool bRight;
-		};
-
 	public:
 		Engine(std::string_view windowTitle, size_t windowWidth, size_t windowHeight);
 		~Engine();
 
 	public:
-		void Initialize();
-		void Run();
-
 		virtual void OnSetup() = 0;
 		virtual void OnUpdate(float dt) = 0;
 
-		MouseState GetMouseState() const;
-		std::optional<Event> PollNextEvent()
-		{
-			if (SDL_PollEvent(&m_optEventCache->GetRawAccess()))
-			{
-				return m_optEventCache;
-			}
-			else
-			{
-				return {};
-			}
-		}
+	public:
+		void Initialize();
+		void Run();
 
-		// Should be placed in the default label of the event switch statement.
-		void IgnoreLastEvent()
-		{
-			SDL_PushEvent(&m_optEventCache->GetRawAccess());
-		}
+
+		std::optional<Event> PollNextEvent();
+		void IgnoreLastEvent();
 
 	private:
 		float GetFrameDelta();
 		void UpdateTitle(float dt);
 		void HandleEvents();
+		void UpdateInput();
 
 	public:
 		constexpr Window& GetWindow()
@@ -71,12 +52,23 @@ namespace ArSDL {
 			return *m_pRenderer;
 		}
 
+	public:
+
+		/* I just like this syntax better than the getters */
+
+ 		Keyboard const& keyboard{m_keyboard};
+		Mouse const& mouse{m_mouse};
+
 	private:
-		// Stores the window info in constructor for later use.
+		// Stores the window info in constructor for later use (used only once tho).
 		WindowInfoCache m_windowCache;
 
+		// Mouse and keyboard have to be private, so the user is unable to mutate them.
+		Mouse m_mouse{};
+		Keyboard m_keyboard{};
+
 		// These need to be unique ptrs because the constructors need to run inside 
-		// a try-catch block.
+		// a try-catch block; They could also be optionals but who cares?
 		std::unique_ptr<Window> m_pWindow;
 		std::unique_ptr<Renderer> m_pRenderer;
 

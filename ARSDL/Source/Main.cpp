@@ -28,9 +28,16 @@ public:
 	void OnUpdate(float) override 
 	{
 		auto& gfx{GetRenderer()};
-		auto const mouse{GetMouseState()};
 
-		static sdl::Color clearColor{sdl::Colors::Cyan};
+		static sdl::Color clearColor{};
+
+		// if (mouse.left.IsJustReleased())
+		// {
+		// 	clearColor = clearColor == sdl::Colors::Orange 
+		// 		? sdl::Colors::Cyan 
+		// 		: sdl::Colors::Orange;
+		// }
+
 		while (auto optEv{PollNextEvent()})
 		{
 			auto& ev{*optEv};
@@ -47,9 +54,6 @@ public:
 				}
 				break;
 			}
-			default:
-				IgnoreLastEvent();
-				break;
 			}
 		}
 

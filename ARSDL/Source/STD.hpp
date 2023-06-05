@@ -31,7 +31,7 @@
 #include <random>
 #include <charconv>
 
-#define ARSDL_DA(_cond) assert(_cond);
+#define ARSDL_DA(_cond) assert(_cond)
 
 #ifndef NDEBUG
 #define ARSDL_DEBUG_MODE 1

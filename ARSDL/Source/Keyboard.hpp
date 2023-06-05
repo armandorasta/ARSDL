@@ -15,7 +15,6 @@ namespace ArSDL {
 		Keyboard& operator=(Keyboard const&) = delete;
 		Keyboard& operator=(Keyboard&&)      = delete;
 
-	public:
 		void Flush();
 		void Update();
 
@@ -23,6 +22,8 @@ namespace ArSDL {
 		{
 			return m_keys[SDL_GetScancodeFromKey(static_cast<SDL_Keycode>(kc))];
 		}
+
+		KeyState const& operator[](char ch) const;
 
 		constexpr size_t GetKeyCount() const
 		{

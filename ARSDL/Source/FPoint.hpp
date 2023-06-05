@@ -15,7 +15,7 @@ namespace ArSDL {
 		constexpr Self& operator=(Self const&) = default;
 		constexpr Self& operator=(Self&&)      = default;
 
-		constexpr FPoint() : SDL_FPoint{} { }
+		constexpr FPoint() : SDL_FPoint{0.0f, 0.0f} { }
 		constexpr FPoint(float x, float y) : SDL_FPoint{x, y} { }
 
 		/** 

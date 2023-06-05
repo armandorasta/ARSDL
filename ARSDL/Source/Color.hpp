@@ -42,8 +42,8 @@ namespace ArSDL {
 		{
 		}
 
-		constexpr Color(float r, float g, float b, float a = 1.f) : 
-			SDL_Color{FToB(r), FToB(g), FToB(b), FToB(a)}
+		constexpr Color(float r, float g, float b, float a = 1.f) 
+			: SDL_Color{FToB(r), FToB(g), FToB(b), FToB(a)}
 		{
 		}
 

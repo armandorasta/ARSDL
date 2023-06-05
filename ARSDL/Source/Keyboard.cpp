@@ -22,4 +22,11 @@ namespace ArSDL {
 			m_keys[i].Update(states[i]);
 		}
 	}
+
+	KeyState const& Keyboard::operator[](char ch) const
+	{
+		auto const myChar{std::tolower(ch)};
+		ARSDL_DA('a' <= myChar && myChar <= 'z');
+		return m_keys[SDL_GetScancodeFromKey(static_cast<SDL_Keycode>(ch))];
+	}
 }

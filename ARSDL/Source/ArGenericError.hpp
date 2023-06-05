@@ -5,20 +5,21 @@ namespace ArSDL {
 	{
 	public:
 		ArGenericError() = default;
-		ArGenericError(std::string_view message) : m_message{message} {}
+		explicit ArGenericError(std::string_view message) : m_Message{message} {}
+		virtual ~ArGenericError() = default;
 
 		ArGenericError(ArGenericError const&) = default;
 		ArGenericError(ArGenericError&&) = default;
 		ArGenericError& operator=(ArGenericError const&) = default;
 		ArGenericError& operator=(ArGenericError&&) = default;
 
-	public:
+
 		virtual std::string GetMessage() const
 		{
-			return m_message;
+			return m_Message;
 		}
 
 	private:
-		std::string m_message{};
+		std::string m_Message{};
 	};
 }

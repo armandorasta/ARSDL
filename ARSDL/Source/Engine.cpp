@@ -137,7 +137,7 @@ namespace ArSDL {
 		}
 	}
 
-	void Engine::IgnoreLastEvent()
+	void Engine::UnhandleLastEvent()
 	{
 		SDL_PushEvent(&m_optEventCache->GetRawAccess());
 	}

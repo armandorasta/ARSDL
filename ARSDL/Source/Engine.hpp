@@ -21,19 +21,19 @@ namespace ArSDL {
 
 	public:
 		Engine(std::string_view windowTitle, size_t windowWidth, size_t windowHeight);
-		~Engine();
+		virtual ~Engine();
 
-	public:
+
 		virtual void OnSetup() = 0;
 		virtual void OnUpdate(float dt) = 0;
 
-	public:
+
 		void Initialize();
 		void Run();
 
 
 		std::optional<Event> PollNextEvent();
-		void IgnoreLastEvent();
+		void UnhandleLastEvent();
 
 	private:
 		float GetFrameDelta();
@@ -52,7 +52,6 @@ namespace ArSDL {
 			return *m_pRenderer;
 		}
 
-	public:
 
 		/* I just like this syntax better than the getters */
 

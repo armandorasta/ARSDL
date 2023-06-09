@@ -35,6 +35,7 @@ namespace ArSDL {
 			return m_CellHeight;
 		}
 
+<<<<<<< HEAD
 		constexpr void SetCellWidth(float newWidth)
 		{
 			m_CellWidth = newWidth;
@@ -47,6 +48,9 @@ namespace ArSDL {
 
 		[[nodiscard]]
 		constexpr std::pair<size_t, size_t> ScreenToGrid(FPoint const& point) const
+=======
+		constexpr std::pair<size_t, size_t> ScreenToGrid(FPoint const& point)
+>>>>>>> 1dda0cab53268f1e216417cb3ce0e1b08658feba
 		{
 			return {
 				static_cast<size_t>(point.x / m_CellWidth),
@@ -54,18 +58,25 @@ namespace ArSDL {
 			};
 		}
 
+<<<<<<< HEAD
 		[[nodiscard]]
 		constexpr FPoint GridToScreen(size_t x, size_t y) const
+=======
+		constexpr FPoint GridToScreen(size_t x, size_t y)
+>>>>>>> 1dda0cab53268f1e216417cb3ce0e1b08658feba
 		{
 			return {x * m_CellWidth, y * m_CellHeight};
 		}
 
+<<<<<<< HEAD
 		[[nodiscard]]
 		constexpr bool operator==(Self const& rhs) const
 		{
 			return Base::operator==(rhs);
 		}
 
+=======
+>>>>>>> 1dda0cab53268f1e216417cb3ce0e1b08658feba
 	private:
 		float m_CellWidth;
 		float m_CellHeight;

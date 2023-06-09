@@ -60,13 +60,13 @@
     <ClCompile Include="ArRobot\ArRobotException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\Camera.cpp">
+    <ClCompile Include="Source\Util\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\CameraDragger.cpp">
+    <ClCompile Include="Source\Util\CameraDragger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Math\CameraWheelScalar.cpp">
+    <ClCompile Include="Source\Util\CameraWheelScalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -398,13 +398,19 @@
     <ClInclude Include="ArRobot\ArRobotException.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\Camera.hpp">
+    <ClInclude Include="Source\Util\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\CameraDragger.hpp">
+    <ClInclude Include="Source\Util\CameraDragger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Math\CameraWheelScalar.hpp">
+    <ClInclude Include="Source\Util\CameraWheelScalar.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Util\Array2D.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Util\Grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

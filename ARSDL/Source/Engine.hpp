@@ -8,7 +8,7 @@
 #include "Keyboard.hpp"
 #include "Mouse.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class Engine
 	{
 	private:

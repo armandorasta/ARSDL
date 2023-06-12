@@ -1,18 +1,18 @@
 #pragma once
 #include "STD.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 #include "Point.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	namespace Secret {
 		template <class Type, class Selection0, class Selection1>
 		concept OneOf = std::same_as<Type, Selection0> || std::same_as<Type, Selection1>;
 
 		template <class Element>
-		using PointFromEl_t = std::conditional_t<std::is_same_v<int, Element>, Point, FPoint>;
+		using PointFromEl_t = std::conditional_t<std::is_same_v<int, Element>, Point, Vec2>;
 	}
 
-	class FRect;
+	class RectF;
 	class Rect;
 
 	template <class Derived, class Value>
@@ -41,7 +41,7 @@ namespace ArSDL {
 			};
 		}
 
-		template <Secret::OneOf<FPoint, Point> Contained>
+		template <Secret::OneOf<Vec2, Point> Contained>
 		constexpr bool Contains(Contained const& that) const 
 		{
 			auto& _this{CRT()};
@@ -49,7 +49,7 @@ namespace ArSDL {
 				&& _this.y < that.y && that.y < _this.y + _this.h;
 		}
 
-		template <Secret::OneOf<FRect, Rect> Contained>
+		template <Secret::OneOf<RectF, Rect> Contained>
 		constexpr bool Contains(Contained const& that) const
 		{
 			auto& _this{CRT()};
@@ -64,7 +64,7 @@ namespace ArSDL {
 				&& _this.y < that.y && _this.y + _this.h > that.y + that.h;
 		}
 
-		template <Secret::OneOf<FRect, Rect> RectType>
+		template <Secret::OneOf<RectF, Rect> RectType>
 		constexpr bool OverlapsWith(RectType const& that) const
 		{
 			auto& _this{CRT()};
@@ -79,7 +79,7 @@ namespace ArSDL {
 				&& _this.y < that.y + that.h && _this.y + _this.h > that.y;
 		}
 
-		template <Secret::OneOf<FRect, Rect> RectType, Secret::OneOf<int, float> Element = float>
+		template <Secret::OneOf<RectF, Rect> RectType, Secret::OneOf<int, float> Element = float>
 		constexpr Secret::PointFromEl_t<Element> CalcOverlap(RectType const& that) const
 		{
 			using PointType = Secret::PointFromEl_t<Element>;
@@ -101,7 +101,7 @@ namespace ArSDL {
 			return std::abs(yDel) < std::abs(xDel) ? PointType{0, yDel} : PointType{xDel, 0};
 		}
 
-		template <Secret::OneOf<FRect, Rect> RectType>
+		template <Secret::OneOf<RectF, Rect> RectType>
 		constexpr void PushOutOf(RectType const& that)
 		{
 			auto& _this{CRT()};
@@ -113,7 +113,7 @@ namespace ArSDL {
 			}
 		}
 
-		template <Secret::OneOf<FRect, Rect> RectType>
+		template <Secret::OneOf<RectF, Rect> RectType>
 		constexpr bool Intersects(RectType const& that) const noexcept
 		{
 			auto& _this{CRT()};

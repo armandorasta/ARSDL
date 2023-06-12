@@ -2,7 +2,7 @@
 
 #include "STD.hpp"
 
-namespace ArSDL::Secret {
+namespace Arge::Secret {
 	template <class Derived, class Value>
 	class PointBase
 	{

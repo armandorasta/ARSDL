@@ -6,7 +6,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Surface;
 
 	class Font

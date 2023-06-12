@@ -2,7 +2,7 @@
 #include "STD.hpp"
 #include "Camera.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class Engine;
 
 	class CameraWheelScalar

@@ -1,16 +1,16 @@
 #pragma once
 #include "STD.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 #include "Color.hpp"
 #include "Texture.hpp"
 #include "Enums.hpp"
-#include "FRect.hpp"
+#include "RectF.hpp"
 #include "Rect.hpp"
 #include "Vertex.hpp"
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Window;
 
 	class Renderer
@@ -33,23 +33,23 @@ namespace ArSDL {
 	public:
 		void Clear(Color color = 0);
 
-		void DrawPoint(FPoint const& pos, Color color);
-		void DrawLine(FPoint const& v0, FPoint const& v1, Color color, float thick = 1.0f);
-		void DrawRect(FPoint const& pos, float w, float h, Color color, float thick = 1.0f);
-		void DrawRect(FRect const& rect, Color color, float thick = 1.0f);
-		void FillRect(FPoint const& pos, float w, float h, Color color);
-		void FillRect(FRect const& rect, Color color);
-		void DrawModel(std::vector<FPoint> const& points, Color color, float thick = 1.0f);
-		void FillModel(std::vector<FPoint> const& points, Color color);
-		void DrawCircle(FPoint const& center, float r, Color color, float thick = 1.0f);
-		void FillCircle(FPoint const& center, float r, Color color);
-		void DrawPolygon(FPoint const& center, float r, size_t sideCount, Color color, 
+		void DrawPoint(Vec2 const& pos, Color color);
+		void DrawLine(Vec2 const& v0, Vec2 const& v1, Color color, float thick = 1.0f);
+		void DrawRect(Vec2 const& pos, float w, float h, Color color, float thick = 1.0f);
+		void DrawRect(RectF const& rect, Color color, float thick = 1.0f);
+		void FillRect(Vec2 const& pos, float w, float h, Color color);
+		void FillRect(RectF const& rect, Color color);
+		void DrawModel(std::vector<Vec2> const& points, Color color, float thick = 1.0f);
+		void FillModel(std::vector<Vec2> const& points, Color color);
+		void DrawCircle(Vec2 const& center, float r, Color color, float thick = 1.0f);
+		void FillCircle(Vec2 const& center, float r, Color color);
+		void DrawPolygon(Vec2 const& center, float r, size_t sideCount, Color color, 
 			float thick = 1.0f, float rotation = 0.0f);
-		void FillPolygon(FPoint const& center, float r, size_t sideCount, Color color, 
+		void FillPolygon(Vec2 const& center, float r, size_t sideCount, Color color, 
 			float rotation = 0.0f);
 
-		void DrawTexture(Texture& tex, FRect const& destRect, Rect const& srcRect);
-		void DrawTexture(Texture& tex, FRect const& destRect);
+		void DrawTexture(Texture& tex, RectF const& destRect, Rect const& srcRect);
+		void DrawTexture(Texture& tex, RectF const& destRect);
 
 		void RenderOnGPU(std::vector<ColorVertex> const& verts);
 		void RenderOnGPU(std::vector<ColorVertex> const& verts, std::vector<int> const& inds);
@@ -74,7 +74,7 @@ namespace ArSDL {
 		bool IsClippingEnabled();
 
 		void SetScale(float scaleX, float scaleY);
-		FPoint GetScale() const;
+		Vec2 GetScale() const;
 
 		void SetVSync(bool toWhat);
 

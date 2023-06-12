@@ -2,11 +2,11 @@
 #include <SDL.h>
 
 #include "STD.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 #include "Enums.hpp"
-#include "FRect.hpp"
+#include "RectF.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class Window
 	{
 	public:
@@ -31,13 +31,13 @@ namespace ArSDL {
 		// This is more efficient than calling GetWidth and GetHeight separately.
 		WindowSize GetSize() const;
 		std::string_view GetTitle() const;
-		FPoint GetPosition() const;
+		Vec2 GetPosition() const;
 		// {width / 2, height / 2}
-		FPoint GetCenter() const;
+		Vec2 GetCenter() const;
 		// {0, 0, width, height}
 		Rect GetRect() const;
 		// {0, 0, width, height}
-		FRect GetFRect() const;
+		RectF GetFRect() const;
 		bool IsResizeable() const;
 		bool IsAlwaysOnTop() const;
 		bool IsMaximized() const;
@@ -48,7 +48,7 @@ namespace ArSDL {
 	public:
 		void SetSize(size_t newWidth, size_t newHeight);
 		void SetTitle(std::string_view newTitle);
-		void SetPosition(FPoint const& newPos);
+		void SetPosition(Vec2 const& newPos);
 		void SetResizeable(bool toWhat) const;
 		void SetAlwaysOnTop(bool toWhat) const;
 		void Maximize() const;

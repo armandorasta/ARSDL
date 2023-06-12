@@ -2,7 +2,7 @@
 #include "STD.hpp"
 #include "ArGenericError.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class ArSDLError : public ArGenericError
 	{
 	public:

@@ -5,12 +5,12 @@
 #include "Util/Camera.hpp"
 #include "Util/CameraDragger.hpp"
 #include "Util/CameraWheelScalar.hpp"
-#include "Util/Grid.hpp"
+#include "ArRobot/PlayField.hpp"
 
-namespace sdl  = ArSDL;
+namespace arge = Arge;
 namespace robo = ArRobot;
 
-class MyGame : public sdl::Engine 
+class MyGame : public arge::Engine 
 {
 private:
 	static constexpr auto CamSpeed{300.0f};
@@ -20,23 +20,25 @@ public:
 
 	void OnSetup() override 
 	{
-		pCam0 = std::make_unique<sdl::Camera>(GetWindow());
-		pCam1 = std::make_unique<sdl::Camera>(GetWindow());
+		pCam0 = std::make_unique<arge::Camera>(GetWindow());
+		pCam0->TranslateBy(GetWindow().GetCenter());
 
-		grid.At(5, 2) = 50;
+		playField.SetTickMilliseconds(300.0f);
+		playField.GetRobot(0).ToggleDebugPrint(true);
+		auto const lastAddr{playField.GetRobot(0).MemorySize() - 1};
+		playField.AddCommand(robo::Command::MakeMemSet(lastAddr, 5));
+		playField.AddCommand(robo::Command::MakeMove(1, 0));
+		playField.AddCommand(robo::Command::MakeIncrement(lastAddr, -1));
+		playField.AddCommand(robo::Command::MakeMemPrintAll());
+		playField.AddCommand(robo::Command::MakeJumpTrue(1));
 	}
 
 	void OnUpdate([[maybe_unused]] float dt) override 
 	{
-		camDrag.Update(*pCam0, mouse);
-		camScal.Update(*pCam0, *this);
-		if (mouse.right.IsPressed())
-		{
-			auto const [col, row] {grid.ScreenToGrid(pCam0->RevTrans(mouse.pos))};
-			auto& el{grid.At(col, row)};
+		camDragger.Update(*pCam0, mouse);
+		camScaler.Update(*pCam0, *this);
 
-			el ? (el = 0) : (el = 50);
-		}
+		playField.Update(dt);
 
 		Draw();
 	}
@@ -45,48 +47,21 @@ public:
 	{
 		[[maybe_unused]]
 		auto& gfx{GetRenderer()};
-		gfx.Clear(sdl::Colors::DarkMagenta);
-
-		DrawGrid();
+		gfx.Clear(arge::Colors::DarkMagenta);
+		playField.Draw(gfx, *pCam0);
 	}
 
-	void DrawGrid()
-	{
-		auto const cellSize{grid.GetCellWidth()};
-
-		for (size_t i{}; i < grid.GetWidth(); ++i)
-		{
-			for (size_t j{}; j < grid.GetHeight(); ++j)
-			{
-				pCam0->FillRect(GetRenderer(),
-					sdl::FPoint{static_cast<float>(i), static_cast<float>(j)} * cellSize,
-					cellSize, cellSize, 
-					grid.At(i, j) ? sdl::Colors::Green : sdl::Colors::Red
-				);
-
-				pCam0->DrawRect(GetRenderer(),
-					sdl::FPoint{static_cast<float>(i), static_cast<float>(j)} * cellSize,
-					cellSize, cellSize, 0, 2.0f
-				);
-			}
-		}
-	}
-
-	void DrawCamRect(sdl::Camera const& cam)
+	void DrawCamRect(arge::Camera const& cam)
 	{
 		auto const camRect{cam.GetRect(GetWindow())};
-		GetRenderer().DrawRect(camRect, sdl::Colors::PaleVioletRed, 3.0f);
+		GetRenderer().DrawRect(camRect, arge::Colors::PaleVioletRed, 3.0f);
 	}
 
 private:
-	robo::Robot robot{};
-
-	std::unique_ptr<sdl::Camera> pCam0{};
-	std::unique_ptr<sdl::Camera> pCam1{};
-	sdl::CameraDragger camDrag{};
-	sdl::CameraWheelScalar camScal{};
-
-	sdl::Grid<int, 20, 20> grid{100.0f, 100.0f};
+	std::unique_ptr<arge::Camera> pCam0{};
+	arge::CameraDragger camDragger{};
+	arge::CameraWheelScalar camScaler{};
+	robo::PlayField playField{};
 };
 
 int main(int, char**)

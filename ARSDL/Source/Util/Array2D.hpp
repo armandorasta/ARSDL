@@ -2,14 +2,18 @@
 #include "STD.hpp"
 #include "ArSDLError.hpp"
 
-namespace ArSDL {
-	template <class TValue, size_t Width, size_t Height>
+namespace Arge {
+	template <class TValue>
 	class Array2D
 	{
 	private:
 		using Self = Array2D;
 
 	public:
+		Array2D(size_t width, size_t height) : m_Width{width}, m_Height{height}
+		{
+			m_Data.resize(width * height);
+		}
 
 		[[nodiscard]]
 		constexpr bool operator==(Self const& rhs) const = default;
@@ -17,9 +21,9 @@ namespace ArSDL {
 		[[nodiscard]]
 		constexpr TValue& At(size_t x, size_t y)
 		{
-			ARSDL_DA(x < Width);
-			ARSDL_DA(y < Height);
-			return m_Data[x + y * Width];
+			ARSDL_DA(x < m_Width);
+			ARSDL_DA(y < m_Height);
+			return m_Data[x + y * m_Width];
 		}
 
 		[[nodiscard]]
@@ -62,13 +66,13 @@ namespace ArSDL {
 		[[nodiscard]]
 		constexpr size_t GetWidth() const
 		{
-			return Width;
+			return m_Width;
 		}
 
 		[[nodiscard]]
 		constexpr size_t GetHeight() const
 		{
-			return Height;
+			return m_Height;
 		}
 
 		// No c or r versions for now.
@@ -78,6 +82,8 @@ namespace ArSDL {
 		constexpr auto end()   { return m_Data.end(); }
 
 	private:
-		std::array<TValue, Width * Height> m_Data{};
+		size_t m_Width;
+		size_t m_Height;
+		std::vector<TValue> m_Data{};
 	};
 }

@@ -6,7 +6,7 @@
 
 #include <SDL_image.h>
 
-namespace ArSDL {
+namespace Arge {
 	Texture& Texture::operator=(Texture&& rhs) noexcept
 	{
 		if (&rhs != this)

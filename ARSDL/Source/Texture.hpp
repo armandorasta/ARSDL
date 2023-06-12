@@ -5,7 +5,7 @@
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Renderer;
 	class Surface;
 

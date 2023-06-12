@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	ArSDLError::ArSDLError(std::string_view message, std::string_view file, size_t line) :
 		ArGenericError{message}, m_sdlMessage{SDL_GetError()},
 		m_file{file}, m_line{line}

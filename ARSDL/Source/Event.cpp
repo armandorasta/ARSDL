@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Event.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	WindowEvent::WindowEvent(SDL_WindowEvent const& rhs)
 	{
 		std::memcpy(this, &rhs, sizeof WindowEvent);

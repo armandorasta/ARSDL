@@ -1,6 +1,6 @@
 #include "STD.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class ArGenericError
 	{
 	public:

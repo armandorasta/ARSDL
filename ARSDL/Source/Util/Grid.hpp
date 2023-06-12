@@ -1,16 +1,18 @@
+
 #pragma once
 #include "STD.hpp"
+#include "Vec2.hpp"
 #include "Array2D.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	/// This is the exact same as Array2D, except it keeps track of the size of the cell,
 	/// and also provides transformation functions between screen-space and grid-index-space.
-	template <class ValueType, size_t Width, size_t Height>
-	class Grid : public Array2D<ValueType, Width, Height>
+	template <class TValue>
+	class Grid : public Array2D<TValue>
 	{
 	private:
 		using Self = Grid;
-		using Base = Array2D<ValueType, Width, Height>;
+		using Base = Array2D<TValue>;
 
 	public:
 		Grid(Self const&)                = default;
@@ -18,8 +20,8 @@ namespace ArSDL {
 		Grid& operator=(Self const&)     = default;
 		Grid& operator=(Self&&) noexcept = default;
 
-		constexpr Grid(float cellWidth, float cellHeight)
-			: m_CellWidth{cellWidth}, m_CellHeight{cellHeight}
+		constexpr Grid(size_t width, size_t height, float cellWidth, float cellHeight)
+			: Base{width, height}, m_CellWidth{cellWidth}, m_CellHeight{cellHeight}
 		{
 		}
 
@@ -46,7 +48,7 @@ namespace ArSDL {
 		}
 
 		[[nodiscard]]
-		constexpr std::pair<size_t, size_t> ScreenToGrid(FPoint const& point) const
+		constexpr std::pair<size_t, size_t> ScreenToGrid(Vec2 const& point) const
 		{
 			return {
 				static_cast<size_t>(point.x / m_CellWidth),
@@ -55,7 +57,7 @@ namespace ArSDL {
 		}
 
 		[[nodiscard]]
-		constexpr FPoint GridToScreen(size_t x, size_t y) const
+		constexpr Vec2 GridToScreen(size_t x, size_t y) const
 		{
 			return {x * m_CellWidth, y * m_CellHeight};
 		}

@@ -6,7 +6,7 @@
 #include "Texture.hpp"
 #include "Window.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	Renderer::Renderer(Window& window) :
 		ptr{SDL_CreateRenderer(window.ptr, -1, SDL_RendererFlags::SDL_RENDERER_ACCELERATED)}
 	{
@@ -34,13 +34,13 @@ namespace ArSDL {
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderClear(ptr));
 	}
 
-	void Renderer::DrawPoint(FPoint const& pos, Color color)
+	void Renderer::DrawPoint(Vec2 const& pos, Color color)
 	{
 		SetColor(color);
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderDrawPointF(ptr, pos.x, pos.y));
 	}
 
-	void Renderer::DrawLine(FPoint const& v0, FPoint const& v1, Color color, float thick)
+	void Renderer::DrawLine(Vec2 const& v0, Vec2 const& v1, Color color, float thick)
 	{
 		SetColor(color);
 		if (std::abs(thick - 1.0f) < 0.0000001f)
@@ -71,12 +71,12 @@ namespace ArSDL {
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
-	void Renderer::DrawRect(FPoint const& pos, float w, float h, Color color, float thick)
+	void Renderer::DrawRect(Vec2 const& pos, float w, float h, Color color, float thick)
 	{
 		DrawRect({pos.x, pos.y, w, h}, color, thick);
 	}
 
-	void Renderer::DrawRect(FRect const& rect, Color color, float thick)
+	void Renderer::DrawRect(RectF const& rect, Color color, float thick)
 	{
 		if (std::abs(thick - 1.0f) < 0.0000001f)
 		{
@@ -91,8 +91,8 @@ namespace ArSDL {
 		}
 
 		SetColor(color);
-		auto const vInnerTL = FPoint{rect.x + thick, rect.y + thick};
-		auto const vOuterTL = FPoint{rect.x - thick, rect.y - thick};
+		auto const vInnerTL = Vec2{rect.x + thick, rect.y + thick};
+		auto const vOuterTL = Vec2{rect.x - thick, rect.y - thick};
 		auto const fInnerWidth {rect.w - 2.0f * thick};
 		auto const fOuterWidth {rect.w + 2.0f * thick};
 		auto const fInnerHeight{rect.h - 2.0f * thick};
@@ -132,18 +132,18 @@ namespace ArSDL {
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
-	void Renderer::FillRect(FPoint const& pos, float w, float h, Color color)
+	void Renderer::FillRect(Vec2 const& pos, float w, float h, Color color)
 	{
 		FillRect({pos.x, pos.y, w, h}, color);
 	}
 
-	void Renderer::FillRect(FRect const& rect, Color color)
+	void Renderer::FillRect(RectF const& rect, Color color)
 	{
 		SetColor(color);
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderFillRectF(ptr, &rect));
 	}
 
-	void Renderer::DrawModel(std::vector<FPoint> const& points, Color color, float thick)
+	void Renderer::DrawModel(std::vector<Vec2> const& points, Color color, float thick)
 	{
 		auto const size{points.size()};
 		for (size_t i{}; i < size; ++i)
@@ -152,11 +152,11 @@ namespace ArSDL {
 		}
 	}
 
-	void Renderer::FillModel(std::vector<FPoint> const& points, Color color)
+	void Renderer::FillModel(std::vector<Vec2> const& points, Color color)
 	{
 		std::vector<SDL_Vertex> verts{};
 		verts.reserve(points.size());
-		std::ranges::transform(points, std::back_inserter(verts), [=](FPoint const& vec) {
+		std::ranges::transform(points, std::back_inserter(verts), [=](Vec2 const& vec) {
 			return SDL_Vertex{
 				.position{vec.x, vec.y},
 				.color{color.r, color.g, color.b, color.a},
@@ -166,7 +166,7 @@ namespace ArSDL {
 			static_cast<int>(verts.size()), nullptr, 0));
 	}
 
-	void Renderer::DrawCircle(FPoint const& center, float r, Color color, float thick)
+	void Renderer::DrawCircle(Vec2 const& center, float r, Color color, float thick)
 	{
 		if (thick >= r)
 		{
@@ -180,14 +180,14 @@ namespace ArSDL {
 		}
 	}
 
-	void Renderer::FillCircle(FPoint const& center, float r, Color color)
+	void Renderer::FillCircle(Vec2 const& center, float r, Color color)
 	{
 		constexpr auto Multiplier{10.0f};
 		auto const steps{static_cast<std::size_t>(Multiplier * r)};
 		FillPolygon(center, r, steps, color);
 	}
 
-	void Renderer::DrawPolygon(FPoint const& center, float r, size_t sideCount, Color color, float thick, 
+	void Renderer::DrawPolygon(Vec2 const& center, float r, size_t sideCount, Color color, float thick, 
 		float rotation)
 	{
 		if (thick >= r)
@@ -203,7 +203,7 @@ namespace ArSDL {
 		inds.reserve(6 * sideCount);
 		for (std::size_t i{}; i < sideCount; ++i)
 		{
-			auto dirVec = FPoint::FromDir(rotation + i * fAngle);
+			auto dirVec = Vec2::FromDir(rotation + i * fAngle);
 			verts.push_back({
 				.position{center + dirVec * (r - thick)},
 				.color{color},
@@ -252,7 +252,7 @@ namespace ArSDL {
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
-	void Renderer::FillPolygon(FPoint const& center, float r, size_t sideCount, Color color, 
+	void Renderer::FillPolygon(Vec2 const& center, float r, size_t sideCount, Color color, 
 		float rotation)
 	{
 		auto const fAngle{2.f * 3.1415926535f / sideCount};
@@ -264,7 +264,7 @@ namespace ArSDL {
 		for (std::size_t i{}; i < sideCount + 1; ++i)
 		{
 			verts.push_back({
-				.position = center + FPoint::FromDir(rotation + i * fAngle, r),
+				.position = center + Vec2::FromDir(rotation + i * fAngle, r),
 				.color{color},
 				.tex_coord{}
 			});
@@ -276,12 +276,12 @@ namespace ArSDL {
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
-	void Renderer::DrawTexture(Texture& tex, FRect const& destRect, Rect const& srcRect)
+	void Renderer::DrawTexture(Texture& tex, RectF const& destRect, Rect const& srcRect)
 	{
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, &srcRect, &destRect));
 	}
 
-	void Renderer::DrawTexture(Texture& tex, FRect const& destRect)
+	void Renderer::DrawTexture(Texture& tex, RectF const& destRect)
 	{
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, nullptr, &destRect));
 	}
@@ -363,9 +363,9 @@ namespace ArSDL {
 		ARSDL_ERROR_HANDLE_NEG(SDL_RenderSetScale(ptr, scaleX, scaleY));
 	}
 
-	FPoint Renderer::GetScale() const
+	Vec2 Renderer::GetScale() const
 	{
-		FPoint res;
+		Vec2 res;
 		SDL_RenderGetScale(ptr, &res.x, &res.y);
 		return res;
 	}

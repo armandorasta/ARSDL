@@ -30,6 +30,7 @@
 #include <stacktrace>
 #include <random>
 #include <charconv>
+#include <iomanip>
 
 #define ARSDL_DA(_cond) assert(_cond)
 
@@ -37,7 +38,7 @@
 #define ARSDL_DEBUG_MODE 1
 #endif // ^^^^ NDEBUG
 
-namespace ArSDL {
+namespace Arge {
 	// Unsigned
 	using size_t   = std::size_t;
 	using uint8_t  = std::uint8_t;

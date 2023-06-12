@@ -2,7 +2,7 @@
 #include "CameraDragger.hpp"
 #include "Mouse.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	namespace {
 		auto const sc_DragButt{&Mouse::left};
 	}

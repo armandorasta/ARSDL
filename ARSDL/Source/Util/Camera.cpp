@@ -2,8 +2,8 @@
 #include "Camera.hpp"
 #include "Window.hpp"
 
-namespace ArSDL {
-    FRect Camera::GetRect(Window const& window) const
+namespace Arge {
+    RectF Camera::GetRect(Window const& window) const
     {
         auto const windowRect{window.GetSize()};
         auto const w{windowRect.width  / m_Scale};
@@ -12,22 +12,22 @@ namespace ArSDL {
         return {x - 0.5f * w, y - 0.5f * h, w, h};
     }
 
-	FPoint Camera::operator()(FPoint const& vec) const
+	Vec2 Camera::operator()(Vec2 const& vec) const
 	{
 		return (vec - m_Translation) * m_Scale + m_pWin->GetCenter();
 	}
 
-	FPoint Camera::Trans(FPoint const& vec) const
+	Vec2 Camera::Trans(Vec2 const& vec) const
 	{
 		return operator()(vec);
 	}
 
-	FPoint Camera::operator[](FPoint const& vec) const
+	Vec2 Camera::operator[](Vec2 const& vec) const
 	{
 		return (vec - m_pWin->GetCenter()) / m_Scale + m_Translation;
 	}
 
-	FPoint Camera::RevTrans(FPoint const& vec) const
+	Vec2 Camera::RevTrans(Vec2 const& vec) const
 	{
 		return operator[](vec);
 	}

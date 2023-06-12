@@ -1,12 +1,12 @@
 #pragma once
 
 #include "STD.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 #include "RectBase.hpp"
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Rect : public SDL_Rect, public RectBase<Rect, int>
 	{
 	public:

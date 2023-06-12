@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Mouse.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	void Mouse::Update()
 	{
 		int x, y;

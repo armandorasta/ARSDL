@@ -6,7 +6,7 @@
 
 #include <SDL_image.h>
 
-namespace ArSDL {
+namespace Arge {
 	Surface& Surface::operator=(Surface&& rhs) noexcept
 	{
 		if (&rhs != this)
@@ -18,7 +18,7 @@ namespace ArSDL {
 		return *this;
 	}
 
-	ArSDL::Surface::~Surface()
+	Arge::Surface::~Surface()
 	{
 		SDL_FreeSurface(ptr);
 	}

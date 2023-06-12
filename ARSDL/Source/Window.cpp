@@ -3,7 +3,7 @@
 #include "ArSDLError.hpp"
 #include "Rect.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	Window::Window(std::string_view title, size_t width, size_t height, WindowFlags flags) :
 		ptr{SDL_CreateWindow(
 			title.data(), 300, 200, static_cast<int>(width),
@@ -54,7 +54,7 @@ namespace ArSDL {
 		return SDL_GetWindowTitle(ptr);
 	}
 
-	FPoint Window::GetPosition() const
+	Vec2 Window::GetPosition() const
 	{
 		int x{};
 		int y{};
@@ -62,7 +62,7 @@ namespace ArSDL {
 		return {static_cast<float>(x), static_cast<float>(y)};
 	}
 
-	FPoint Window::GetCenter() const
+	Vec2 Window::GetCenter() const
 	{
 		return {GetWidth() * 0.5f, GetHeight() * 0.5f};
 	}
@@ -72,7 +72,7 @@ namespace ArSDL {
 		return {0, 0, static_cast<int>(GetWidth()), static_cast<int>(GetHeight())};
 	}
 
-	FRect Window::GetFRect() const
+	RectF Window::GetFRect() const
 	{
 		return {0.0f, 0.0f, static_cast<float>(GetWidth()), static_cast<float>(GetHeight())};
 	}
@@ -124,7 +124,7 @@ namespace ArSDL {
 		SDL_SetWindowTitle(ptr, newTitle.data());
 	}
 
-	void Window::SetPosition(FPoint const& newPos)
+	void Window::SetPosition(Vec2 const& newPos)
 	{
 		SDL_SetWindowPosition(ptr, static_cast<int>(newPos.x), static_cast<int>(newPos.y));
 	}

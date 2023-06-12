@@ -1,7 +1,7 @@
 #pragma once
 #include "STD.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class KeyState
 	{
 	public:

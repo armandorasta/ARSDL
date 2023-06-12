@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Keyboard.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	Keyboard::Keyboard()
 	{
 		int keyCount;

@@ -3,20 +3,20 @@
 #include "PointBase.hpp"
 #include "Util.hpp"
 
-namespace ArSDL {
-	class FPoint : public SDL_FPoint, public Secret::PointBase<FPoint, float>
+namespace Arge {
+	class Vec2 : public SDL_FPoint, public Secret::PointBase<Vec2, float>
 	{
 	public:
-		using Self = FPoint;
-		using CRef = FPoint const&;
+		using Self = Vec2;
+		using CRef = Vec2 const&;
 
-		constexpr FPoint(Self const&)          = default;
-		constexpr FPoint(Self&&)               = default;
+		constexpr Vec2(Self const&)          = default;
+		constexpr Vec2(Self&&)               = default;
 		constexpr Self& operator=(Self const&) = default;
 		constexpr Self& operator=(Self&&)      = default;
 
-		constexpr FPoint() : SDL_FPoint{0.0f, 0.0f} { }
-		constexpr FPoint(float x, float y) : SDL_FPoint{x, y} { }
+		constexpr Vec2() : SDL_FPoint{0.0f, 0.0f} { }
+		constexpr Vec2(float x, float y) : SDL_FPoint{x, y} { }
 
 		/** 
 			* @brief creats a vector using a direction and a length.
@@ -127,19 +127,17 @@ namespace ArSDL {
 		const static Self One;
 	};
 
-	inline const FPoint::Self FPoint::Zero{0.f, 0.f};
-	inline const FPoint::Self FPoint::UnitX{1.f, 0.f};
-	inline const FPoint::Self FPoint::UnitY{0.f, 1.f};
-	inline const FPoint::Self FPoint::One{1.f, 1.f};
-
-	using Vec2 = FPoint;
+	inline const Vec2::Self Vec2::Zero{0.f, 0.f};
+	inline const Vec2::Self Vec2::UnitX{1.f, 0.f};
+	inline const Vec2::Self Vec2::UnitY{0.f, 1.f};
+	inline const Vec2::Self Vec2::One{1.f, 1.f};
 }
 
 namespace std {
 	template <>
-	struct formatter<ArSDL::FPoint> : public formatter<std::string> 
+	struct formatter<Arge::Vec2> : public formatter<std::string> 
 	{
-		auto format(ArSDL::FPoint const& vec, format_context context) 
+		auto format(Arge::Vec2 const& vec, format_context context) 
 		{ return vformat_to(context.out(), vec.ToString(), std::make_format_args()); }
 	};
 }

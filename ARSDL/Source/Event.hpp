@@ -2,11 +2,11 @@
 #include "STD.hpp"
 #include "Enums.hpp"
 #include "ArSDLError.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class WindowEvent : SDL_WindowEvent
 	{
 	public:
@@ -24,7 +24,7 @@ namespace ArSDL {
 		}
 
 		// Used for WindowEventID::Moved
-		constexpr FPoint GetNewLocation()
+		constexpr Vec2 GetNewLocation()
 		{
 			ARSDL_ERROR_DEBUG_THROW_IF(event != SDL_WINDOWEVENT_MOVED);
 			return {static_cast<float>(data1), static_cast<float>(data2)};
@@ -91,12 +91,12 @@ namespace ArSDL {
 			return (state & SDL_BUTTON_RMASK) != 0;
 		}
 
-		constexpr FPoint GetPos() const
+		constexpr Vec2 GetPos() const
 		{
 			return {static_cast<float>(x), static_cast<float>(y)};
 		}
 
-		constexpr FPoint GetRelativePos() const
+		constexpr Vec2 GetRelativePos() const
 		{
 			return {static_cast<float>(xrel), static_cast<float>(yrel)};
 		}
@@ -138,7 +138,7 @@ namespace ArSDL {
 			return button == 3;
 		}
 
-		constexpr FPoint GetPos() const
+		constexpr Vec2 GetPos() const
 		{
 			return {static_cast<float>(x), static_cast<float>(y)};
 		}
@@ -175,7 +175,7 @@ namespace ArSDL {
 			return preciseX;
 		}
 
-		constexpr FPoint GetPos() const
+		constexpr Vec2 GetPos() const
 		{
 			return {static_cast<float>(mouseX), static_cast<float>(mouseY)};
 		}

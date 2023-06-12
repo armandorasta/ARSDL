@@ -2,7 +2,7 @@
 #include "STD.hpp"
 #include "Camera.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	class Mouse;
 
 	class CameraDragger
@@ -30,13 +30,13 @@ namespace ArSDL {
 		}
 
 		// Will be in screen-space.
-		constexpr FPoint const& GetCamDragBeginPos() const
+		constexpr Vec2 const& GetCamDragBeginPos() const
 		{
 			return m_TransCache;
 		}
 
 		// Will be in screen-space.
-		constexpr FPoint const& GetMouseDragBeginPos() const
+		constexpr Vec2 const& GetMouseDragBeginPos() const
 		{
 			return m_MousePosCache;
 		}
@@ -49,7 +49,7 @@ namespace ArSDL {
 
 	private:
 		bool m_bMouseLanded{};
-		FPoint m_TransCache{};
-		FPoint m_MousePosCache{};
+		Vec2 m_TransCache{};
+		Vec2 m_MousePosCache{};
 	};
 }

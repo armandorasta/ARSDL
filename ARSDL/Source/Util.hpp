@@ -1,7 +1,7 @@
 #pragma once
 #include "STD.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	namespace Details {
 		template <class TNum>
 		concept Number = std::is_arithmetic_v<TNum>;

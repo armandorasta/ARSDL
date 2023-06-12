@@ -5,7 +5,7 @@
 
 #include <SDL_ttf.h>
 
-namespace ArSDL {
+namespace Arge {
 	Font& Font::operator=(Font&& rhs)
 	{
 		if (&rhs != this)

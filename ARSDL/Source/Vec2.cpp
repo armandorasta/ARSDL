@@ -1,24 +1,24 @@
 #include "pch.h"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 
-namespace ArSDL {
-	float FPoint::Dist(CRef lhs, CRef rhs)
+namespace Arge {
+	float Vec2::Dist(CRef lhs, CRef rhs)
 	{
 		return std::sqrt(Dist2(lhs, rhs));
 	}
 
-	auto FPoint::Normalized() const noexcept -> Self
+	auto Vec2::Normalized() const noexcept -> Self
 	{
 		auto const mag{Mag()};
-		return Util::FloatEq(mag, 0.f) ? FPoint{} : operator/(mag);
+		return Util::FloatEq(mag, 0.f) ? Vec2{} : operator/(mag);
 	}
 
-	void FPoint::Normalize() noexcept
+	void Vec2::Normalize() noexcept
 	{
 		operator=(Normalized());
 	}
 
-	auto FPoint::Rotated(float angle) const noexcept -> Self
+	auto Vec2::Rotated(float angle) const noexcept -> Self
 	{
 		// did not use SinCos because I am planning to switch to 
 		// std::sin and std::cos in c++23
@@ -30,7 +30,7 @@ namespace ArSDL {
 		};
 	}
 
-	void FPoint::Rotate(float angle) noexcept
+	void Vec2::Rotate(float angle) noexcept
 	{
 		operator=(Rotated(angle));
 	}

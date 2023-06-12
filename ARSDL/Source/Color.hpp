@@ -4,7 +4,7 @@
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Color : public SDL_Color
 	{
 	public:

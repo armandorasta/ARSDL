@@ -1,11 +1,11 @@
 #pragma once
 #include "STD.hpp"
 #include "KeyState.hpp"
-#include "FPoint.hpp"
+#include "Vec2.hpp"
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Mouse
 	{
 	public:
@@ -19,7 +19,7 @@ namespace ArSDL {
 		void Update();
 
 	public:
-		FPoint pos;
+		Vec2 pos;
 		KeyState left;
 		KeyState mid;
 		KeyState right;

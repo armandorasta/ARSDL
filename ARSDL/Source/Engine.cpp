@@ -6,7 +6,7 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 
-namespace ArSDL {
+namespace Arge {
 	Engine::Engine(std::string_view windowTitle, size_t windowWidth, size_t windowHeight)
 		: m_windowCache{std::string{windowTitle}, windowWidth, windowHeight}
 	{

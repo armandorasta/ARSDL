@@ -2,7 +2,7 @@
 #include "CameraWheelScalar.hpp"
 #include "Engine.hpp"
 
-namespace ArSDL {
+namespace Arge {
 	void CameraWheelScalar::Update(Camera& camera, Engine& engine) const
 	{
 		while (auto const ev{engine.PollNextEvent()})

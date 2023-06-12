@@ -3,12 +3,12 @@
 #include "STD.hpp"
 #include "Color.hpp"
 #include "Enums.hpp"
-#include "FRect.hpp"
+#include "RectF.hpp"
 #include "Rect.hpp"
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Surface
 	{
 	public:

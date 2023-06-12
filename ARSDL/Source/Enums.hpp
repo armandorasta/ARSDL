@@ -4,7 +4,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 
-namespace ArSDL {
+namespace Arge {
 	enum class BlendMode 
 	{
 		Off            = SDL_BLENDMODE_NONE,

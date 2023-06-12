@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 
-namespace ArSDL {
+namespace Arge {
 	class Point : public SDL_Point, public Secret::PointBase<Point, int>
 	{
 	public:
@@ -19,9 +19,9 @@ namespace ArSDL {
 
 namespace std {
 	template <>
-	struct formatter<ArSDL::Point> : public formatter<std::string>
+	struct formatter<Arge::Point> : public formatter<std::string>
 	{
-		auto format(ArSDL::Point const& vec, format_context context)
+		auto format(Arge::Point const& vec, format_context context)
 		{
 			return vformat_to(context.out(), vec.ToString(), std::make_format_args());
 		}

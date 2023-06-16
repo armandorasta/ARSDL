@@ -11,14 +11,14 @@ namespace ArRobot {
 	public:
 		PlayField()
 		{
-			m_Robots.emplace_back();
+			m_Robots.emplace_back(m_Grid);
 		}
 
 		void AddCommand(Command const& newCommand);
 		void Update(float dt);
-		void RunCode();
 		void Draw(Arge::Renderer& gfx, Arge::Camera const& camera);
 		void DrawGrid(Arge::Renderer& gfx, Arge::Camera const& camera);
+		Arge::Color GetBlockColor(BlockType block) const;
 
 		constexpr float GetTickMilliseconds() const
 		{
@@ -44,6 +44,20 @@ namespace ArRobot {
 		constexpr Robot& GetRobot(std::size_t index)
 		{
 			return m_Robots[index];
+		}
+
+		template <std::invocable<Robot&> Callable>
+		constexpr void ForEachRobot(Callable const& doWhat)
+		{
+			for (auto& robot : m_Robots)
+			{
+				doWhat(robot);
+			}
+		}
+
+		constexpr Arge::Grid<BlockType>& GetGrid()
+		{
+			return m_Grid;
 		}
 
 	private:

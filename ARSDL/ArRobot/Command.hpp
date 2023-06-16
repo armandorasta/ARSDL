@@ -1,129 +1,26 @@
 #pragma once
 #include "STD.hpp"
 #include "ArRobotException.hpp"
-
-/*
-	Global constants {
-		Directions {
-			_West,
-			_NorthWest,
-			_North,
-			_NorthEast,
-			...
-		}
-
-		Block types {
-			_Wall,
-			_Item,
-			_Floor,
-			...
-		}
-	}
-
-	Built-in functions {
-		Fundamental {
-			_Move(Direction),
-			_Take(Direction),
-			_Drop(Direction),
-		}
-
-		Utility {
-			_Contain_same,
-			_Are_same(
-		}
-	}
-
-	Keywords {
-		if, else, elif,
-		while, for
-		func, var,
-		contains,
-
-	}
-
-	while _Left is _Wall && _Right is _Wall {
-		move(_North)
-	}
-
-	while _Are_same(_Left, _Right) {
-		move(_North)
-	}
-
-	while _All_are(_Wall, _Left, _Right) {
-		move(_North)
-	}
-
-	for_all as dir {
-
-	}
-*/
+#include "OpCode.hpp"
+#include "Direction.hpp"
+#include "BlockType.hpp"
+#include "Point.hpp"
 
 namespace ArRobot {
-	enum class OpCode : std::int32_t
-	{
-		Add = 1,
-		Sub,
-		Mul,
-		Div,
-
-		Equal,
-		NotEqual,
-		Greater,
-		GreaterEq,
-		Less,
-		LessEq,
-	};
-
-	constexpr std::string_view OpCodeToString(OpCode opCode)
-	{
-		using enum OpCode;
-		switch (opCode)
-		{
-		case Add:       return "Add";
-		case Sub:       return "Sub";
-		case Mul:       return "Mul";
-		case Div:       return "Div";
-		case Equal:     return "Equal";
-		case NotEqual:  return "NotEqual";
-		case Greater:   return "Greater";
-		case GreaterEq: return "GreaterEq";
-		case Less:      return "Less";
-		case LessEq:    return "LessEq";
-		default:        return "Invalid";
-		}
-	}
-
-	constexpr std::int32_t OpCodeEval(OpCode opCode, std::int32_t lhs, std::int32_t rhs)
-	{
-		using enum OpCode;
-		switch (opCode)
-		{
-		case Add:       return lhs +  rhs;
-		case Sub:		return lhs -  rhs;
-		case Mul:		return lhs *  rhs;
-		case Div:		return lhs /  rhs;
-		case Equal:		return lhs == rhs ? 1 : 0;
-		case NotEqual:	return lhs != rhs ? 1 : 0;
-		case Greater:	return lhs >  rhs ? 1 : 0;
-		case GreaterEq:	return lhs >= rhs ? 1 : 0;
-		case Less:		return lhs <  rhs ? 1 : 0;
-		case LessEq:	return lhs <= rhs ? 1 : 0;
-		default:
-			throw GenericError{"Evaluating invalid OpCode: {}", static_cast<std::int32_t>(opCode)};
-		}
-	}
-
 	enum class CommandType : std::size_t
 	{
-		NoOp = 0,
+		DoNothing = 0,
 
 		Move,
 		PickUp,
 		Drop,
 
+		CheckDir,
+		MarkLabel,
 		Jump,
 		JumpTrue,
 		JumpFalse,
+		Halt,
 
 		MemSet,
 		MemCopy,
@@ -136,59 +33,99 @@ namespace ArRobot {
 		MemPrintAll,
 	};
 
-	struct Command
+	class Command
 	{
+	private:
+		using ToStringFunc = std::function<std::string(Command const&)>;
+		inline static std::unordered_map<CommandType, ToStringFunc> s_ToStringFuncMap{};
+
+		struct StringDataTagType { };
+		static constexpr StringDataTagType StringDataTag{};
+
+	public:
+		static constexpr std::size_t InstantPeriod{1};
 		static constexpr std::size_t VeryShortPeriod{1};
 		static constexpr std::size_t ShortPeriod{2};
 		static constexpr std::size_t MediumPeriod{5};
 		static constexpr std::size_t LongPeriod{10};
 		static constexpr std::size_t VeryLongPeriod{20};
 
-		static constexpr Command MakeNoOp()
+		constexpr Command(CommandType type, std::array<std::int32_t, 3> const& data = {},
+			std::size_t ticks = VeryShortPeriod) :
+			m_Type{type}, m_IntData{data}, m_Ticks{ticks}
 		{
-			return {CommandType::NoOp};
+		}
+
+		constexpr Command(StringDataTagType, CommandType type, std::string_view data, 
+			std::size_t ticks = VeryShortPeriod) : 
+			m_Type{type}, m_StringData{std::string{data}}, m_Ticks{ticks}
+		{
+		}
+
+		static constexpr Command MakeDoNothing()
+		{
+			return {CommandType::DoNothing};
 		}
 
 		static constexpr Command MakeMove(std::int32_t delX, std::int32_t delY)
 		{
-			return {CommandType::Move, {delX, delY}, VeryLongPeriod};
+			return {CommandType::Move, { delX, delY }, LongPeriod};
 		}
 
 		static constexpr Command MakePickUp()
 		{
-			return {CommandType::PickUp, {}, MediumPeriod};
+			return {CommandType::PickUp, { }, MediumPeriod};
 		}
 
 		static constexpr Command MakeDrop()
 		{
-			return {CommandType::Drop, {}, MediumPeriod};
+			return {CommandType::Drop, { }, MediumPeriod};
 		}
 
-		static constexpr Command MakeJump(std::int32_t lineNumber)
+		static constexpr Command MakeCheckDir(std::int32_t x, std::int32_t y, BlockType whatToCheckFor)
 		{
-			return {CommandType::Jump, {lineNumber}, VeryShortPeriod};
+			return {
+				CommandType::CheckDir, 
+				{ x, y, static_cast<std::int32_t>(whatToCheckFor) },
+				ShortPeriod,
+			};
 		}
 
-		static constexpr Command MakeJumpTrue(std::int32_t lineNumber)
+		static constexpr Command MakeMarkLabel(std::string_view name)
 		{
-			return {CommandType::JumpTrue, {lineNumber}, VeryShortPeriod};
+			return {StringDataTag, CommandType::MarkLabel, name, InstantPeriod};
 		}
 
-		static constexpr Command MakeJumpFalse(std::int32_t lineNumber)
+		static constexpr Command MakeJump(std::string_view label)
 		{
-			return {CommandType::JumpFalse, {lineNumber}, VeryShortPeriod};
+			return {StringDataTag, CommandType::Jump, label, VeryShortPeriod};
+		}
+
+		static constexpr Command MakeJumpTrue(std::string_view label)
+		{
+			return {StringDataTag, CommandType::JumpTrue, label, VeryShortPeriod};
+		}
+
+		static constexpr Command MakeJumpFalse(std::string_view label)
+		{
+			return {StringDataTag, CommandType::JumpFalse, label, VeryShortPeriod};
+		}
+
+		static constexpr Command MakeHalt()
+		{
+			return {CommandType::Halt};
 		}
 
 		static constexpr Command MakeMemSet(std::size_t address, std::int32_t value)
 		{
-			return {CommandType::MemSet, {static_cast<std::int32_t>(address), value}, ShortPeriod};
+			return {CommandType::MemSet, { static_cast<std::int32_t>(address), value }, ShortPeriod};
 		}
 
 		static constexpr Command MakeMemCopy(std::size_t to, std::size_t from)
 		{
 			return {
 				CommandType::MemCopy,
-				{static_cast<std::int32_t>(to), static_cast<std::int32_t>(from)},
+				{ static_cast<std::int32_t>(to), static_cast<std::int32_t>(from) },
 				ShortPeriod,
 			};
 		}
@@ -197,18 +134,18 @@ namespace ArRobot {
 		{
 			return {
 				CommandType::Increment,
-				{static_cast<std::int32_t>(address), incValue},
+				{ static_cast<std::int32_t>(address), incValue },
 				ShortPeriod,
 			};
 		}
 
 		// Stores in lhs.
-		static constexpr Command MakeBinaryOp(
-			OpCode opCode, std::size_t lhsAddress, std::size_t rhsAddress)
+		static constexpr Command MakeBinaryOp(OpCode opCode, std::size_t lhsAddress, 
+			std::size_t rhsAddress)
 		{
 			return {
 				CommandType::BinaryOp,
-				std::array{
+				{
 					static_cast<std::int32_t>(opCode),
 					static_cast<std::int32_t>(lhsAddress),
 					static_cast<std::int32_t>(rhsAddress),
@@ -228,15 +165,48 @@ namespace ArRobot {
 
 		static constexpr Command MakeMemPrintAll()
 		{
-			return {CommandType::MemPrintAll, {}, VeryShortPeriod};
+			return {CommandType::MemPrintAll, { }, VeryShortPeriod};
 		}
 
 		std::string ToString() const;
 		friend std::ostream& operator<<(std::ostream& lhs, Command const& rhs);
 
-		CommandType type;
-		std::array<std::int32_t, 3> data{};
-		std::size_t ticks;
+		constexpr CommandType GetType() const
+		{
+			return m_Type;
+		}
+
+		// TODO: Remove these two functions.
+
+		[[nodiscard]]
+		constexpr std::int32_t GetIntDataAt(std::size_t index) const
+		{
+			AROBOT_DA(index < m_IntData.size(),
+				"Command Data index out of bounds; index={} but length={}",
+				index, m_IntData.size()
+			);
+			return m_IntData[index];
+		}
+
+		[[nodiscard]]
+		constexpr std::string const& GetStringData() const
+		{
+			return m_StringData;
+		}
+
+		template <CommandType CmdType>
+		[[nodiscard]] auto As() const;
+
+		constexpr std::size_t GetTickCount() const
+		{
+			return m_Ticks;
+		}
+
+	private:
+		CommandType m_Type;
+		std::array<std::int32_t, 3> m_IntData{};
+		std::string m_StringData{};
+		std::size_t m_Ticks;
 	};
 }
 
@@ -255,7 +225,87 @@ namespace std {
 	{
 		auto format(ArRobot::OpCode const& opCode, format_context context)
 		{
-			return vformat_to(context.out(), OpCodeToString(opCode), std::make_format_args());
+			return vformat_to(context.out(), ArRobot::OpCodeEnum::ToString(opCode), 
+				std::make_format_args());
 		}
 	};
+}
+
+namespace ArRobot {
+	struct CheckDirData
+	{
+		std::int32_t x; 
+		std::int32_t y;
+		BlockType block;
+	};
+
+	struct MemCopyData
+	{
+		std::size_t destAddr;
+		std::size_t srcAddr;
+	};
+
+	struct MemAddrAndValue
+	{
+		std::size_t addr;
+		std::int32_t value;
+	};
+
+	struct BinaryOpData
+	{
+		OpCode opCode;
+		std::size_t lhs;
+		std::size_t rhs;
+	};
+
+	template <CommandType CmdType>
+	auto Command::As() const
+	{
+		using enum CommandType;
+		if constexpr (CmdType == DoNothing || CmdType == Halt || CmdType == MemPrintAll 
+			|| CmdType == PickUp || CmdType == Drop)
+		{
+			return nullptr;
+		}
+		else if constexpr (CmdType == Move)
+		{
+			return Arge::Point{m_IntData[0], m_IntData[1]};
+		}
+		else if constexpr (CmdType == CheckDir)
+		{
+			return CheckDirData{m_IntData[0], m_IntData[1], static_cast<BlockType>(m_IntData[2])};
+		}
+		else if constexpr (CmdType == MarkLabel || CmdType == Jump || CmdType == JumpTrue
+			|| CmdType == JumpFalse)
+		{
+			return m_StringData;
+		}
+		else if constexpr (CmdType == MemSet || CmdType == Increment)
+		{
+			return MemAddrAndValue{static_cast<std::size_t>(m_IntData[0]), m_IntData[1]};
+		}
+		else if constexpr (CmdType == MemCopy)
+		{
+			return MemCopyData{
+				static_cast<std::size_t>(m_IntData[0]),
+				static_cast<std::size_t>(m_IntData[1]),
+			};
+		}
+		else if constexpr (CmdType == BinaryOp)
+		{
+			return BinaryOpData{
+				static_cast<OpCode>(m_IntData[0]),
+				static_cast<std::size_t>(m_IntData[1]),
+				static_cast<std::size_t>(m_IntData[2]),
+			};
+		}
+		else if constexpr (CmdType == MemPrint)
+		{
+			return static_cast<std::size_t>(m_IntData[0]);
+		}
+		else
+		{
+			throw GenericError{"Invalid or Unimplemented CommandType passed to As<>"};
+		}
+	}
 }

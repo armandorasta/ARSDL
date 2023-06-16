@@ -75,6 +75,18 @@ namespace Arge {
 			return m_Height;
 		}
 
+		[[nodiscard]]
+		constexpr bool IsInBounds(std::size_t x, std::size_t y) const
+		{
+			return x < m_Width && y < m_Height;
+		}
+
+		[[nodiscard]]
+		constexpr bool IsInBoundsSigned(std::int32_t x, std::int32_t y) const
+		{
+			return 0 <= x  && x < m_Width && 0 <= y && y < m_Height;
+		}
+
 		// No c or r versions for now.
 		constexpr auto begin() const { return m_Data.begin(); }
 		constexpr auto end()   const { return m_Data.end(); }

@@ -183,6 +183,8 @@
   <ItemGroup>
     <ClInclude Include="ArRobot\ArRobotException.hpp" />
     <ClInclude Include="ArRobot\BlockType.hpp" />
+    <ClInclude Include="ArRobot\Direction.hpp" />
+    <ClInclude Include="ArRobot\OpCode.hpp" />
     <ClInclude Include="ArRobot\PlayField.hpp" />
     <ClInclude Include="ArRobot\Robot.hpp" />
     <ClInclude Include="ArRobot\Command.hpp" />

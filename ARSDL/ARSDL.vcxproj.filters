@@ -437,6 +437,12 @@
     <ClInclude Include="ArRobot\BlockType.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArRobot\OpCode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArRobot\Direction.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />

@@ -24,11 +24,9 @@ namespace Arge {
 		ARSDL_ERROR_HANDLE_NEG(SDL_Init(SDL_INIT_VIDEO));
 		ARSDL_ERROR_HANDLE_NEG(TTF_Init());
 
-		// Initializing SDL_image
-		{
-			constexpr auto SDLImageInitFlags{IMG_INIT_JPG | IMG_INIT_PNG};
-			ARSDL_ERROR_HANDLE_NEG(IMG_Init(SDLImageInitFlags) - SDLImageInitFlags);
-		}
+		// Initializing SDL_image...
+		constexpr auto SDLImageInitFlags{IMG_INIT_JPG | IMG_INIT_PNG};
+		ARSDL_ERROR_HANDLE_NEG(IMG_Init(SDLImageInitFlags) - SDLImageInitFlags);
 
 		auto const& [wt, ww, wh] {m_windowCache};
 		m_pWindow = std::make_unique<Window>(wt, ww, wh);
@@ -62,24 +60,17 @@ namespace Arge {
 		{ 
 			std::cerr << err.GetMessage(); 
 		} 
-		catch (std::exception const& err) 
-		{ 
-			std::cerr << err.what(); 
-		} 
-		catch (...) 
-		{ 
-			std::cerr << "Unknown exception type"; 
-		}
 	}
 	
 	float Engine::GetFrameDelta()
 	{
 		namespace chrono = std::chrono;
-		static std::pair s_TimePoints{chrono::steady_clock::now(), chrono::steady_clock::now()};
+		static auto s_LastTimePoint{chrono::steady_clock::now()};
+		static auto s_CurrTimePoint{chrono::steady_clock::now()};
 
-		s_TimePoints.second = chrono::steady_clock::now();
-		std::chrono::duration<float> const deltaTime{s_TimePoints.second - s_TimePoints.first};
-		s_TimePoints.first = s_TimePoints.second;
+		s_CurrTimePoint = chrono::steady_clock::now();
+		chrono::duration<float> const deltaTime{s_CurrTimePoint - s_LastTimePoint};
+		s_LastTimePoint = s_CurrTimePoint;
 		return deltaTime.count();
 	}
 	
@@ -89,10 +80,11 @@ namespace Arge {
 		using namespace std::chrono_literals;
 		constexpr chrono::duration UpdateDeltaTime{0.5s};
 
-		static std::pair s_TimePoints{chrono::steady_clock::now(), chrono::steady_clock::now()};
+		static auto s_LastTimePoint{chrono::steady_clock::now()};
+		static auto s_CurrTimePoint{chrono::steady_clock::now()};
 
-		s_TimePoints.second = chrono::steady_clock::now();
-		chrono::duration<float> const deltaTime{s_TimePoints.second - s_TimePoints.first};
+		s_CurrTimePoint = chrono::steady_clock::now();
+		chrono::duration<float> const deltaTime{s_CurrTimePoint - s_LastTimePoint};
 
 		if (deltaTime > UpdateDeltaTime)
 		{
@@ -102,12 +94,11 @@ namespace Arge {
 				dt > 0.001f ? std::to_string(1.f / dt) : "+1000",
 				dt
 			));
-			// m_pWindow->SetTitle(sc_InitialTitle);
-			s_TimePoints.first = s_TimePoints.second;
+			s_LastTimePoint = s_CurrTimePoint;
 		}
 	}
 	
-	void Engine::HandleEvents()
+	void Engine::HandleEvents() const
 	{
 		SDL_Event ev{ };
 		while (SDL_PollEvent(&ev)) 

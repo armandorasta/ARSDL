@@ -78,7 +78,7 @@ namespace ArRobot {
 #define AROBOT_DA(_cond, ...) \
 	if (!(_cond)) throw ::ArRobot::DebugAssertionError{std::source_location::current(), __VA_ARGS__}
 
-#define AROBOT_UNREACHABLE_CODE()                     AROBOT_DA(false, "Uunreachable code path")
+#define AROBOT_UNREACHABLE_CODE()                     AROBOT_DA(false, "Unreachable code path")
 #define AROBOT_NOT_IMPLEMENTED(_whatIsNotImplemented) AROBOT_DA(false, "Unimplemented code path: " _whatIsNotImplemented);
 
 #endif // NDEBUG

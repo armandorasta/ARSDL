@@ -18,7 +18,7 @@ namespace ArRobot {
 	{
 		if (newCommand.GetType() == CommandType::MarkLabel)
 		{
-			m_LabelMap.try_emplace(newCommand.As<CommandType::MarkLabel>(), m_Commands.size());
+			m_LabelMap.try_emplace(newCommand.As<CommandType::MarkLabel>().label, m_Commands.size());
 		}
 		else
 		{
@@ -28,7 +28,7 @@ namespace ArRobot {
 
 	void Robot::Tick()
 	{
-		if (m_Cooldown > 0)
+		if constexpr (false && m_Cooldown > 0)
 		{
 			m_Cooldown -= 1;
 		}
@@ -86,13 +86,13 @@ namespace ArRobot {
 
 		if (bDebugVisuals)
 		{
-			// Can't extract it out because it depends on alot of variables in the current scope.
+			// Can't extract it out because it depends on a lot of variables in the current scope.
 			using enum CommandType;
 			switch (auto const& currCommand{m_Commands[m_CommandPtr]}; currCommand.GetType())
 			{
 			case Move:
 			{
-				auto const data{currCommand.As<Move>()};
+				auto const& data{currCommand.As<Move>()};
 				Arge::Vec2 const centerOffset{cellWidth * 0.5f, cellWidth * 0.5f};
 				auto const screenDelta{m_ParentGrid.GridToScreen(data.x, data.y)};
 				auto const targetPos{screenPos + screenDelta + centerOffset};
@@ -104,12 +104,12 @@ namespace ArRobot {
 			}
 			case CheckDir:
 			{
-				auto const data{currCommand.As<CheckDir>()};
+				auto const& data{currCommand.As<CheckDir>()};
 				Arge::Vec2 const centerOffset{cellWidth * 0.5f, cellWidth * 0.5f};
 				auto const screenDelta{m_ParentGrid.GridToScreen(data.x, data.y)};
 				auto const targetPos{screenPos + screenDelta + centerOffset};
-				camera.DrawCircle(gfx, targetPos, cellWidth * 0.3f, Arge::Colors::PaleVioletRed,
-					0.5f * scaledPadding);
+				camera.DrawCircle(
+					gfx, targetPos, cellWidth * 0.3f, Arge::Colors::PaleVioletRed, 0.5f * scaledPadding);
 				break;
 			}
 			default:
@@ -149,32 +149,32 @@ namespace ArRobot {
 		}
 		case CheckDir:  HandleCheckDir(cmd); break;
 		case MarkLabel: throw GenericError{"MarkLabel may not be executed"};
-		case Jump:      HandleJump(true, cmd.As<Jump>()); break;
-		case JumpTrue:  HandleJump(m_MemSlots.back() != 0, cmd.As<JumpTrue>()); break;
-		case JumpFalse: HandleJump(m_MemSlots.back() == 0, cmd.As<JumpFalse>()); break;
+		case Jump:      HandleJump(true, cmd.As<Jump>().label); break;
+		case JumpTrue:  HandleJump(m_MemSlots.back() != 0, cmd.As<JumpTrue>().label); break;
+		case JumpFalse: HandleJump(m_MemSlots.back() == 0, cmd.As<JumpFalse>().label); break;
 		case Halt:      /* Stop. */ break;
 		case MemSet:    
 		{
-			auto const [addr, value] {cmd.As<MemSet>()};
+			auto const& [addr, value] {cmd.As<MemSet>()};
 			m_MemSlots[addr] = value; 
 			break;
 		}
 		case MemCopy:   
 		{
-			auto const [to, from] {cmd.As<MemCopy>()};
+			auto const& [to, from] {cmd.As<MemCopy>()};
 			m_MemSlots[to] = m_MemSlots[from];
 			break;
 		}
 		case Increment: 
 		{
-			auto const [addr, value] {cmd.As<MemSet>()};
+			auto const& [addr, value] {cmd.As<MemSet>()};
 			m_MemSlots[addr] += value; 
 			break;
 		}
 		case BinaryOp: HandleBinaryOp(cmd); break;
 		case MemPrint:
 		{
-			auto const addr{cmd.As<MemPrint>()};
+			auto const& [addr] {cmd.As<MemPrint>()};
 			std::cout << std::format("mem[{}] = {}\n", addr, m_MemSlots[addr]);
 			break;
 		}

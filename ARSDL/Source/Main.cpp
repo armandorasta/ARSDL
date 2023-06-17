@@ -23,7 +23,7 @@ public:
 		pCam0 = std::make_unique<arge::Camera>(GetWindow());
 		pCam0->TranslateBy(GetWindow().GetCenter());
 
-		playField.SetTickMilliseconds(50.0f);
+		playField.SetTickMilliseconds(100.0f);
 		playField.ForEachRobot([](auto& robot) 
 		{ 
 			robot.ToggleDebugPrinting(true); 

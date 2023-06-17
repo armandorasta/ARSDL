@@ -9,25 +9,27 @@ namespace ArRobot {
 		switch (m_Type)
 		{
 		case DoNothing: return "DoNothing\n";
-		case Move:      return std::format("[Move](x={}, y={})\n", m_IntData[0], m_IntData[1]);
+		case Move:      return std::format("[Move](x={}, y={})\n", As<Move>().x, As<Move>().y);
 		case PickUp:    return "[PickUp]()\n";
 		case Drop:      return "[Drop]()\n";
-		case MarkLabel: return std::format("[MarkLabel](name={})\n", m_StringData);
-		case Jump:      return std::format("[Jump](addr={})\n", m_IntData[0]);
-		case JumpTrue:  return std::format("[JumpTrue](addr={})\n", m_IntData[0]);
-		case JumpFalse: return std::format("[JumpFalse](addr={})\n", m_IntData[0]);
+		case MarkLabel: return std::format("[MarkLabel](name={})\n", As<MarkLabel>().label);
+		case Jump:      return std::format("[Jump](addr={})\n", As<Jump>().label);
+		case JumpTrue:  return std::format("[JumpTrue](addr={})\n", As<JumpTrue>().label);
+		case JumpFalse: return std::format("[JumpFalse](addr={})\n", As<JumpFalse>().label);
 		case Halt:      return "Halt\n";
-		case MemSet:    return std::format("[MemSet](addr={}, val={})\n", m_IntData[0], m_IntData[1]);
-		case MemCopy:   return std::format("[MemCopy](to={}, from={})\n", m_IntData[0], m_IntData[1]);
-		case Increment: return std::format("[Increment](addr={}, del={})\n", m_IntData[0], m_IntData[1]);
+		case MemSet:    return std::format("[MemSet](addr={}, val={})\n", As<MemSet>().addr, As<MemSet>().value);
+		case MemCopy:   return std::format("[MemCopy](to={}, from={})\n", As<MemCopy>().toAddr, As<MemCopy>().fromAddr);
+		case Increment: return std::format("[Increment](addr={}, del={})\n", As<Increment>().addr, As<Increment>().value);
 		case BinaryOp:  
 		{
-			auto const opCode{static_cast<OpCode>(m_IntData[0])};
-			return std::format("[{}](lhs={}, rhs={})\n", opCode, m_IntData[1], m_IntData[2]);
+			auto const& [opCode, lhs, rhs] { As<BinaryOp>() };
+			return std::format("[{}](lhs={}, rhs={})\n", opCode, lhs, rhs);
 		}
-		case CheckDir:  return std::format(
-			"[CheckDir](x={}, y={}, block={})\n", 
-			m_IntData[0], m_IntData[1], static_cast<BlockType>(m_IntData[2]));
+		case CheckDir:  
+		{
+			auto const& [x, y, block] { As<CheckDir>() };
+			return std::format("[CheckDir](x={}, y={}, block={})\n", x, y, block);
+		}
 		case MemPrint:
 		case MemPrintAll:
 			// Their default behaviour is printing, no more info is needed.

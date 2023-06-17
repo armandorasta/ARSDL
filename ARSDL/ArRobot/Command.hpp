@@ -33,6 +33,60 @@ namespace ArRobot {
 		MemPrintAll,
 	};
 
+	namespace Cmd {
+		struct DoNothing {};
+		struct Move { std::int32_t x; std::int32_t y; };
+		struct PickUp {};
+		struct Drop {};
+		struct CheckDir { std::int32_t x; std::int32_t y; BlockType block; };
+		struct MarkLabel { std::string label; };
+		struct Jump { std::string label; };
+		struct JumpTrue { std::string label; };
+		struct JumpFalse { std::string label; };
+		struct Halt {};
+		struct MemSet { std::size_t addr; std::int32_t value; };
+		struct MemCopy { std::size_t toAddr; std::size_t fromAddr; };
+		struct Increment { std::size_t addr; std::int32_t value; };
+		struct BinaryOp { OpCode opCode; std::size_t lhsAddr; std::size_t rhsAddr; };
+		struct MemPrint { std::size_t addr; };
+		struct MemPrintAll {};
+
+		template <CommandType CmdType>
+		struct Data;
+
+		template <> struct Data<CommandType::DoNothing> { using type = DoNothing; };
+		
+		template <> struct Data<CommandType::Move> { using type = Move; };
+		template <> struct Data<CommandType::PickUp> { using type = PickUp; };
+		template <> struct Data<CommandType::Drop> { using type = Drop; };
+
+		template <> struct Data<CommandType::CheckDir> { using type = CheckDir; };
+		template <> struct Data<CommandType::MarkLabel> { using type = MarkLabel; };
+		template <> struct Data<CommandType::Jump> { using type = Jump; };
+		template <> struct Data<CommandType::JumpTrue> { using type = JumpTrue; };
+		template <> struct Data<CommandType::JumpFalse> { using type = JumpFalse; };
+		template <> struct Data<CommandType::Halt> { using type = Halt; };
+
+		template <> struct Data<CommandType::MemSet> { using type = MemSet; };
+		template <> struct Data<CommandType::MemCopy> { using type = MemCopy; };
+		template <> struct Data<CommandType::Increment> { using type = Increment; };
+		template <> struct Data<CommandType::BinaryOp> { using type = BinaryOp; };
+
+		template <> struct Data<CommandType::MemPrint> { using type = MemPrint; };
+		template <> struct Data<CommandType::MemPrintAll> { using type = MemPrintAll; };
+
+		template <CommandType CmdType>
+		using Data_t = typename Data<CmdType>::type;
+
+		using Variant = std::variant<
+			DoNothing, 
+			Move, PickUp, Drop, 
+			CheckDir, MarkLabel, Jump, JumpTrue, JumpFalse, Halt,
+			MemSet, MemCopy, Increment, BinaryOp,
+			MemPrint, MemPrintAll
+		>;
+	}
+
 	class Command
 	{
 	private:
@@ -50,93 +104,78 @@ namespace ArRobot {
 		static constexpr std::size_t LongPeriod{10};
 		static constexpr std::size_t VeryLongPeriod{20};
 
-		constexpr Command(CommandType type, std::array<std::int32_t, 3> const& data = {},
-			std::size_t ticks = VeryShortPeriod) :
-			m_Type{type}, m_IntData{data}, m_Ticks{ticks}
-		{
-		}
-
-		constexpr Command(StringDataTagType, CommandType type, std::string_view data, 
-			std::size_t ticks = VeryShortPeriod) : 
-			m_Type{type}, m_StringData{std::string{data}}, m_Ticks{ticks}
+		constexpr Command(CommandType type, Cmd::Variant var, std::size_t ticks = VeryShortPeriod)
+			: m_Type{type}, m_Data{var}, m_Ticks{ticks}
 		{
 		}
 
 		static constexpr Command MakeDoNothing()
 		{
-			return {CommandType::DoNothing};
+			return {CommandType::DoNothing, Cmd::DoNothing{}};
 		}
 
 		static constexpr Command MakeMove(std::int32_t delX, std::int32_t delY)
 		{
-			return {CommandType::Move, { delX, delY }, LongPeriod};
+			return {CommandType::Move, Cmd::Move{delX, delY}, LongPeriod};
 		}
 
 		static constexpr Command MakePickUp()
 		{
-			return {CommandType::PickUp, { }, MediumPeriod};
+			return {CommandType::PickUp, Cmd::PickUp{}, MediumPeriod};
 		}
 
 		static constexpr Command MakeDrop()
 		{
-			return {CommandType::Drop, { }, MediumPeriod};
+			return {CommandType::Drop, Cmd::Drop{}, MediumPeriod};
 		}
 
 		static constexpr Command MakeCheckDir(std::int32_t x, std::int32_t y, BlockType whatToCheckFor)
 		{
 			return {
 				CommandType::CheckDir, 
-				{ x, y, static_cast<std::int32_t>(whatToCheckFor) },
+				Cmd::CheckDir{x, y, whatToCheckFor},
 				ShortPeriod,
 			};
 		}
 
 		static constexpr Command MakeMarkLabel(std::string_view name)
 		{
-			return {StringDataTag, CommandType::MarkLabel, name, InstantPeriod};
+			return {CommandType::MarkLabel, Cmd::MarkLabel{std::string{name}}, InstantPeriod};
 		}
 
 		static constexpr Command MakeJump(std::string_view label)
 		{
-			return {StringDataTag, CommandType::Jump, label, VeryShortPeriod};
+			return {CommandType::Jump, Cmd::Jump{std::string{label}}, VeryShortPeriod};
 		}
 
 		static constexpr Command MakeJumpTrue(std::string_view label)
 		{
-			return {StringDataTag, CommandType::JumpTrue, label, VeryShortPeriod};
+			return {CommandType::JumpTrue, Cmd::JumpTrue{std::string{label}}, VeryShortPeriod};
 		}
 
 		static constexpr Command MakeJumpFalse(std::string_view label)
 		{
-			return {StringDataTag, CommandType::JumpFalse, label, VeryShortPeriod};
+			return {CommandType::JumpFalse, Cmd::JumpFalse{std::string{label}}, VeryShortPeriod};
 		}
 
 		static constexpr Command MakeHalt()
 		{
-			return {CommandType::Halt};
+			return {CommandType::Halt, Cmd::Halt{}};
 		}
 
 		static constexpr Command MakeMemSet(std::size_t address, std::int32_t value)
 		{
-			return {CommandType::MemSet, { static_cast<std::int32_t>(address), value }, ShortPeriod};
+			return {CommandType::MemSet, Cmd::MemSet{address, value}, ShortPeriod};
 		}
 
 		static constexpr Command MakeMemCopy(std::size_t to, std::size_t from)
 		{
-			return {
-				CommandType::MemCopy,
-				{ static_cast<std::int32_t>(to), static_cast<std::int32_t>(from) },
-				ShortPeriod,
-			};
+			return {CommandType::MemCopy, Cmd::MemCopy{to, from}, ShortPeriod};
 		}
 
 		static constexpr Command MakeIncrement(std::size_t address, std::int32_t incValue)
 		{
-			return {
-				CommandType::Increment,
-				{ static_cast<std::int32_t>(address), incValue },
-				ShortPeriod,
-			};
+			return {CommandType::Increment, Cmd::Increment{address, incValue}, ShortPeriod};
 		}
 
 		// Stores in lhs.
@@ -145,10 +184,10 @@ namespace ArRobot {
 		{
 			return {
 				CommandType::BinaryOp,
-				{
-					static_cast<std::int32_t>(opCode),
-					static_cast<std::int32_t>(lhsAddress),
-					static_cast<std::int32_t>(rhsAddress),
+				Cmd::BinaryOp{
+					opCode,
+					lhsAddress,
+					rhsAddress,
 				},
 				ShortPeriod,
 			};
@@ -156,16 +195,12 @@ namespace ArRobot {
 
 		static constexpr Command MakeMemPrint(std::size_t address)
 		{
-			return {
-				CommandType::MemPrint,
-				{ static_cast<std::int32_t>(address) },
-				VeryShortPeriod,
-			};
+			return {CommandType::MemPrint, Cmd::MemPrint{address}, VeryShortPeriod};
 		}
 
 		static constexpr Command MakeMemPrintAll()
 		{
-			return {CommandType::MemPrintAll, { }, VeryShortPeriod};
+			return {CommandType::MemPrintAll, Cmd::MemPrintAll{}, VeryShortPeriod};
 		}
 
 		std::string ToString() const;
@@ -177,7 +212,10 @@ namespace ArRobot {
 		}
 
 		template <CommandType CmdType>
-		[[nodiscard]] auto As() const;
+		[[nodiscard]] auto const& As() const
+		{
+			return std::get<Cmd::Data_t<CmdType>>(m_Data);
+		}
 
 		constexpr std::size_t GetTickCount() const
 		{
@@ -186,11 +224,7 @@ namespace ArRobot {
 
 	private:
 		CommandType m_Type;
-		// Still using an array because it's the same size as a vector, but much faster.
-		std::array<std::int32_t, 3> m_IntData{};
-		// No using std::variant because future commands may have both types of data.
-		// Also std::variant takes extra space anyway.
-		std::string m_StringData{};
+		Cmd::Variant m_Data{};
 		std::size_t m_Ticks;
 	};
 }
@@ -216,6 +250,7 @@ namespace std {
 	};
 }
 
+/*
 namespace ArRobot {
 	struct CheckDirData
 	{
@@ -302,3 +337,4 @@ namespace ArRobot {
 		}
 	}
 }
+*/

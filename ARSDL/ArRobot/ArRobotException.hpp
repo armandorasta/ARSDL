@@ -1,5 +1,5 @@
 #pragma once
-#include "STD.hpp"
+#include "Arge.hpp"
 
 namespace ArRobot {
 	class ArRobotException
@@ -61,6 +61,13 @@ namespace ArRobot {
 
 	/// Thrown by functions can't throw any of the other types of errors.
 	class GenericError : public ArRobotException
+	{
+	public:
+		using ArRobotException::ArRobotException;
+	};
+
+	/// Thrown by tokenization functions.
+	class ParseError : public ArRobotException
 	{
 	public:
 		using ArRobotException::ArRobotException;

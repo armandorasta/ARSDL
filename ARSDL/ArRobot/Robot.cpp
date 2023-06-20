@@ -5,7 +5,7 @@
 namespace ArRobot {
 	Robot::Robot(Arge::Grid<BlockType>& parentGrid) : Robot{parentGrid, 0, 0} {};
 	Robot::Robot(Arge::Grid<BlockType>& parentGrid, std::int32_t x, std::int32_t y)
-		: m_ParentGrid{parentGrid}, m_MemSlots(16), m_X{x}, m_Y{y}
+		: m_ParentGrid{parentGrid}, m_X{x}, m_Y{y}
 	{
 		if (!m_Commands.empty())
 		{
@@ -125,60 +125,61 @@ namespace ArRobot {
 		switch (cmd.GetType()) 
 		{ 
 			using enum CommandType;
-		case DoNothing: /* Sleep a little. */ break;
-		case Move:      HandleMove(cmd); break;
+		case DoNothing: 
+			/* Sleep a little. */ 
+			break;
+		case Move:      
+			HandleMove(cmd); 
+			break;
 		case PickUp:
-		{
 			if (m_bItem)
-			{
 				throw GenericError{"Already holding something"};
-			}
-
 			m_bItem = true;
 			break;
-		}
 		case Drop:
-		{
 			if (!m_bItem)
-			{
 				throw GenericError{"Dropping nothing"};
-			}
-
 			m_bItem = false;
 			break;
-		}
-		case CheckDir:  HandleCheckDir(cmd); break;
-		case MarkLabel: throw GenericError{"MarkLabel may not be executed"};
-		case Jump:      HandleJump(true, cmd.As<Jump>().label); break;
-		case JumpTrue:  HandleJump(m_MemSlots.back() != 0, cmd.As<JumpTrue>().label); break;
-		case JumpFalse: HandleJump(m_MemSlots.back() == 0, cmd.As<JumpFalse>().label); break;
-		case Halt:      /* Stop. */ break;
+		case CheckDir:  
+			HandleCheckDir(cmd); 
+			break;
+		case MarkLabel: 
+			throw GenericError{"MarkLabel may not be executed"};
+		case Jump:      
+			HandleJump(true, cmd.As<Jump>().label); 
+			break;
+		case JumpTrue:  
+			HandleJump(m_GlobalMemory.back() != 0, cmd.As<JumpTrue>().label); 
+			break;
+		case JumpFalse: 
+			HandleJump(m_GlobalMemory.back() == 0, cmd.As<JumpFalse>().label); 
+			break;
+		case Halt:      
+			/* Stop. */ 
+			break;
 		case MemSet:    
 		{
 			auto const& [addr, value] {cmd.As<MemSet>()};
-			m_MemSlots[addr] = value; 
+			m_GlobalMemory[addr] = value; 
 			break;
 		}
 		case MemCopy:   
 		{
 			auto const& [to, from] {cmd.As<MemCopy>()};
-			m_MemSlots[to] = m_MemSlots[from];
-			break;
-		}
-		case Increment: 
-		{
-			auto const& [addr, value] {cmd.As<MemSet>()};
-			m_MemSlots[addr] += value; 
+			m_GlobalMemory[to] = m_GlobalMemory[from];
 			break;
 		}
 		case BinaryOp: HandleBinaryOp(cmd); break;
 		case MemPrint:
 		{
 			auto const& [addr] {cmd.As<MemPrint>()};
-			std::cout << std::format("mem[{}] = {}\n", addr, m_MemSlots[addr]);
+			std::cout << std::format("mem[{}] = {}\n", addr, m_GlobalMemory[addr]);
 			break;
 		}
-		case MemPrintAll: HandleMemPrintAll(); break;
+		case MemPrintAll: 
+			HandleMemPrintAll(); 
+			break;
 		default: 
 			throw GenericError{"Executing invalid Command: {}", cmd};
 		}
@@ -191,7 +192,7 @@ namespace ArRobot {
 
 	void Robot::HandleMove(Command const& cmd)
 	{
-		auto const [x, y] {cmd.As<CommandType::Move>()};
+		auto const& [x, y] {cmd.As<CommandType::Move>()};
 		m_X += x;
 		m_Y += y;
 
@@ -209,42 +210,42 @@ namespace ArRobot {
 
 	void Robot::HandleCheckDir(Command const& cmd)
 	{
-		auto const [x, y, block] {cmd.As<CommandType::CheckDir>()};
+		auto const& [x, y, block] {cmd.As<CommandType::CheckDir>()};
 		auto const targetX{m_X + x};
 		auto const targetY{m_Y + y};
 		auto const adjacentBlock = m_ParentGrid.IsInBounds(targetX, targetY) ?
 			m_ParentGrid.At(targetX, targetY) : BlockType::Wall;
-		m_MemSlots.back() = (adjacentBlock == block);
+		m_GlobalMemory.back() = (adjacentBlock == block);
 	}
 
 	void Robot::HandleBinaryOp(Command const& cmd)
 	{
-		auto const [opCode, lhs, rhs] {cmd.As<CommandType::BinaryOp>()};
-		m_MemSlots[lhs] = OpCodeEnum::Eval(opCode, m_MemSlots[lhs], m_MemSlots[rhs]);
+		auto const& [opCode, lhs, rhs] {cmd.As<CommandType::BinaryOp>()};
+		m_GlobalMemory[lhs] = OpCodeEnum::Eval(opCode, m_GlobalMemory[lhs], m_GlobalMemory[rhs]);
 	}
 
 	void Robot::HandleMemPrintAll() const 
 	{
 		// Top line
-		std::cout << std::string(m_MemSlots.size() * 4 + 1, '-') << "\n|";
+		std::cout << std::string(m_GlobalMemory.size() * 4 + 1, '-') << "\n|";
 
 		// Memory indices...
-		for (std::size_t i{}; i < m_MemSlots.size(); ++i)
+		for (std::size_t i{}; i < m_GlobalMemory.size(); ++i)
 		{
 			std::cout << std::format("{:^3}|", i);
 		}
 
 		// Middle line
-		std::cout << '\n' << std::string(m_MemSlots.size() * 4 + 1, '-') << "\n|";
+		std::cout << '\n' << std::string(m_GlobalMemory.size() * 4 + 1, '-') << "\n|";
 
 		// Memory values...
-		for (auto const mem : m_MemSlots)
+		for (auto const mem : m_GlobalMemory)
 		{
 			std::cout << std::format("{:<3}|", mem);
 		}
 
 		// Bottom line
-		std::cout << '\n' << std::string(m_MemSlots.size() * 4 + 1, '-') << "\n";
+		std::cout << '\n' << std::string(m_GlobalMemory.size() * 4 + 1, '-') << "\n";
 	}
 
 	void Robot::HandleJump(bool cond, std::string_view label)

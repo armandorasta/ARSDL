@@ -15,58 +15,58 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Main.cpp">
+    <ClCompile Include="Arge\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ArSDLError.cpp">
+    <ClCompile Include="Arge\ArSDLError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Color.cpp">
+    <ClCompile Include="Arge\Color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Surface.cpp">
+    <ClCompile Include="Arge\Surface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
+    <ClCompile Include="Arge\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Vec2.cpp">
+    <ClCompile Include="Arge\Vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
+    <ClCompile Include="Arge\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Font.cpp">
+    <ClCompile Include="Arge\Font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer.cpp">
+    <ClCompile Include="Arge\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\pch.cpp">
+    <ClCompile Include="Arge\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine.cpp">
+    <ClCompile Include="Arge\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Event.cpp">
+    <ClCompile Include="Arge\Event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Keyboard.cpp">
+    <ClCompile Include="Arge\Keyboard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mouse.cpp">
+    <ClCompile Include="Arge\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArRobot\ArRobotException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Util\Camera.cpp">
+    <ClCompile Include="Arge\Util\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Util\CameraDragger.cpp">
+    <ClCompile Include="Arge\Util\CameraDragger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Util\CameraWheelScalar.cpp">
+    <ClCompile Include="Arge\Util\CameraWheelScalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArRobot\Robot.cpp">
@@ -76,6 +76,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ArRobot\Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArRobot\Tokenizer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArRobot\Token.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArRobot\Util\Random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ArRobot\Util\NumberParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,76 +338,76 @@
     <ClInclude Include="Source\RectF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\STD.hpp">
+    <ClInclude Include="Arge\ArgeCore.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util.hpp">
+    <ClInclude Include="Arge\Util.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ArSDLError.hpp">
+    <ClInclude Include="Arge\ArSDLError.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ArGenericError.hpp">
+    <ClInclude Include="Arge\ArGenericError.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Surface.hpp">
+    <ClInclude Include="Arge\Surface.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Texture.hpp">
+    <ClInclude Include="Arge\Texture.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Color.hpp">
+    <ClInclude Include="Arge\Color.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Window.hpp">
+    <ClInclude Include="Arge\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vec2.hpp">
+    <ClInclude Include="Arge\Vec2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enums.hpp">
+    <ClInclude Include="Arge\Enums.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Font.hpp">
+    <ClInclude Include="Arge\Font.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer.hpp">
+    <ClInclude Include="Arge\Renderer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\pch.h">
+    <ClInclude Include="Arge\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\RectF.hpp">
+    <ClInclude Include="Arge\RectF.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Rect.hpp">
+    <ClInclude Include="Arge\Rect.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\RectBase.hpp">
+    <ClInclude Include="Arge\RectBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Point.hpp">
+    <ClInclude Include="Arge\Point.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PointBase.hpp">
+    <ClInclude Include="Arge\PointBase.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Vertex.hpp">
+    <ClInclude Include="Arge\Vertex.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Event.hpp">
+    <ClInclude Include="Arge\Event.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine.hpp">
+    <ClInclude Include="Arge\Engine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Keyboard.hpp">
+    <ClInclude Include="Arge\Keyboard.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\KeyState.hpp">
+    <ClInclude Include="Arge\KeyState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Mouse.hpp">
+    <ClInclude Include="Arge\Mouse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ArRobot\Robot.hpp">
@@ -407,19 +419,19 @@
     <ClInclude Include="ArRobot\ArRobotException.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util\Camera.hpp">
+    <ClInclude Include="Arge\Util\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util\CameraDragger.hpp">
+    <ClInclude Include="Arge\Util\CameraDragger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util\CameraWheelScalar.hpp">
+    <ClInclude Include="Arge\Util\CameraWheelScalar.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util\Array2D.hpp">
+    <ClInclude Include="Arge\Util\Array2D.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Util\Grid.hpp">
+    <ClInclude Include="Arge\Util\Grid.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\Math\CameraDragger.hpp">
@@ -443,6 +455,21 @@
     <ClInclude Include="ArRobot\Direction.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ArRobot\Tokenizer.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArRobot\Token.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArRobot\Util\Random.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArRobot\Util\NumberParser.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Arge\Arge.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />
@@ -464,6 +491,7 @@
     <Text Include="lib\SDL2_image-2.6.3\CHANGES.txt" />
     <Text Include="lib\SDL2_image-2.6.3\LICENSE.txt" />
     <Text Include="lib\SDL2_image-2.6.3\README.txt" />
+    <Text Include="Program.txt" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="NatvisFile.natvis" />

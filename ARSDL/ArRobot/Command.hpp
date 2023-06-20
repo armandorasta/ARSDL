@@ -1,10 +1,9 @@
 #pragma once
-#include "STD.hpp"
+#include "Arge.hpp"
 #include "ArRobotException.hpp"
 #include "OpCode.hpp"
 #include "Direction.hpp"
 #include "BlockType.hpp"
-#include "Point.hpp"
 
 namespace ArRobot {
 	// This is an implementation detail.
@@ -28,8 +27,6 @@ namespace ArRobot {
 
 		MemSet,
 		MemCopy,
-		Increment,
-
 		BinaryOp,
 
 		// Debug Commands
@@ -41,35 +38,28 @@ namespace ArRobot {
 	namespace Cmd {
 		using enum CommandType;
 
-		template <CommandType CmdType>
-		struct Data;
+		template <CommandType = static_cast<CommandType>(0I32)>
+		struct Data {};
 
-		template <> struct Data<DoNothing> {};
-		
-		template <> struct Data<Move> { std::int32_t x; std::int32_t y; };
-		template <> struct Data<PickUp> {};
-		template <> struct Data<Drop> {};
-
-		template <> struct Data<CheckDir> { std::int32_t x; std::int32_t y; BlockType block; };
+		template <> struct Data<Move>      { std::int32_t x; std::int32_t y; };
+		template <> struct Data<CheckDir>  { std::int32_t x; std::int32_t y; BlockType block; };
 		template <> struct Data<MarkLabel> { std::string label; };
-		template <> struct Data<Jump> { std::string label; };
-		template <> struct Data<JumpTrue> { std::string label; };
+		template <> struct Data<Jump>      { std::string label; };
+		template <> struct Data<JumpTrue>  { std::string label; };
 		template <> struct Data<JumpFalse> { std::string label; };
-		template <> struct Data<Halt> {};
-
-		template <> struct Data<MemSet> { std::size_t addr; std::int32_t value; };
-		template <> struct Data<MemCopy> { std::size_t toAddr; std::size_t fromAddr; };
-		template <> struct Data<Increment> { std::size_t addr; std::int32_t value; };
-		template <> struct Data<BinaryOp> { OpCode opCode; std::size_t lhsAddr; std::size_t rhsAddr; };
-
-		template <> struct Data<MemPrint> { std::size_t addr; };
-		template <> struct Data<MemPrintAll> {};
+		template <> struct Data<MemSet>    { std::size_t addr; std::int32_t value; };
+		template <> struct Data<MemCopy>   { std::size_t toAddr; std::size_t fromAddr; };
+		template <> struct Data<BinaryOp>  { OpCode opCode; std::size_t lhsAddr; std::size_t rhsAddr; };
+		template <> struct Data<MemPrint>  { std::size_t addr; };
 
 		using Variant = std::variant<
-			Data<DoNothing>, 
-			Data<Move>, Data<PickUp>, Data<Drop>, 
-			Data<CheckDir>, Data<MarkLabel>, Data<Jump>, Data<JumpTrue>, Data<JumpFalse>, Data<Halt>,
-			Data<MemSet>, Data<MemCopy>, Data<Increment>, Data<BinaryOp>,
+			// Animated:
+			Data<DoNothing>, Data<Move>, Data<PickUp>, Data<Drop>, 
+			// Control flow:
+			Data<CheckDir>, Data<MarkLabel>, Data<Jump>, Data<JumpTrue>, Data<JumpFalse>, 
+			Data<Halt>, 
+			// Memory:
+			Data<MemSet>, Data<MemCopy>, Data<BinaryOp>,
 			Data<MemPrint>, Data<MemPrintAll>
 		>;
 	}
@@ -92,6 +82,8 @@ namespace ArRobot {
 		}
 
 	public:
+		// This is the best way to do it; any other way I found so far will just make 
+		// the code explode in size, for such small performance gain.
 		static constexpr Command MakeDoNothing()
 		{
 			using enum CommandType;
@@ -168,15 +160,9 @@ namespace ArRobot {
 			return {MemCopy, Cmd::Data<MemCopy>{to, from}, ShortPeriod};
 		}
 
-		static constexpr Command MakeIncrement(std::size_t address, std::int32_t incValue)
-		{
-			using enum CommandType;
-			return {Increment, Cmd::Data<Increment>{address, incValue}, ShortPeriod};
-		}
-
 		// Stores in lhs.
-		static constexpr Command MakeBinaryOp(OpCode opCode, std::size_t lhsAddress, 
-			std::size_t rhsAddress)
+		static constexpr Command MakeBinaryOp(
+			OpCode opCode, std::size_t lhsAddress, std::size_t rhsAddress) 
 		{
 			using enum CommandType;
 			return {
@@ -230,110 +216,21 @@ namespace ArRobot {
 
 namespace std {
 	template <>
-	struct formatter<ArRobot::Command> : std::formatter<std::string>
+	struct formatter<ArRobot::Command> : formatter<std::string>
 	{
-		auto format(ArRobot::Command const& cmd, format_context context)
+		auto format(ArRobot::Command const& cmd, format_context context) const
 		{
-			return vformat_to(context.out(), cmd.ToString(), std::make_format_args());
+			return formatter<std::string>{}.format(cmd.ToString(), context);
 		}
 	};
 
 	template <>
-	struct formatter<ArRobot::OpCode> : std::formatter<std::string>
+	struct formatter<ArRobot::OpCode> : formatter<std::string_view>
 	{
-		auto format(ArRobot::OpCode const& opCode, format_context context)
+		auto format(ArRobot::OpCode opCode, format_context context) const 
 		{
-			return vformat_to(context.out(), ArRobot::OpCodeEnum::ToString(opCode), 
-				std::make_format_args());
+			auto const str{ArRobot::OpCodeEnum::ToString(opCode)};
+			return formatter<std::string_view>{}.format(str, context);
 		}
 	};
 }
-
-/*
-namespace ArRobot {
-	struct CheckDirData
-	{
-		std::int32_t x; 
-		std::int32_t y;
-		BlockType block;
-	};
-
-	struct MemCopyData
-	{
-		std::size_t destAddr;
-		std::size_t srcAddr;
-	};
-
-	struct MemAddrAndValue
-	{
-		std::size_t addr;
-		std::int32_t value;
-	};
-
-	struct BinaryOpData
-	{
-		OpCode opCode;
-		std::size_t lhs;
-		std::size_t rhs;
-	};
-
-	template <CommandType CmdType>
-	auto Command::As() const
-	{
-		// if constexpr for the win, baby!
-		using enum CommandType;
-		if constexpr (
-			CmdType == DoNothing || 
-			CmdType == Halt || 
-			CmdType == MemPrintAll ||
-			CmdType == PickUp || 
-			CmdType == Drop)
-		{
-			return nullptr;
-		}
-		else if constexpr (CmdType == Move)
-		{
-			return Arge::Point{m_IntData[0], m_IntData[1]};
-		}
-		else if constexpr (CmdType == CheckDir)
-		{
-			return CheckDirData{m_IntData[0], m_IntData[1], static_cast<BlockType>(m_IntData[2])};
-		}
-		else if constexpr (
-			CmdType == MarkLabel || 
-			CmdType == Jump || 
-			CmdType == JumpTrue || 
-			CmdType == JumpFalse)
-		{
-			return m_StringData;
-		}
-		else if constexpr (CmdType == MemSet || CmdType == Increment)
-		{
-			return MemAddrAndValue{static_cast<std::size_t>(m_IntData[0]), m_IntData[1]};
-		}
-		else if constexpr (CmdType == MemCopy)
-		{
-			return MemCopyData{
-				static_cast<std::size_t>(m_IntData[0]),
-				static_cast<std::size_t>(m_IntData[1]),
-			};
-		}
-		else if constexpr (CmdType == BinaryOp)
-		{
-			return BinaryOpData{
-				static_cast<OpCode>(m_IntData[0]),
-				static_cast<std::size_t>(m_IntData[1]),
-				static_cast<std::size_t>(m_IntData[2]),
-			};
-		}
-		else if constexpr (CmdType == MemPrint)
-		{
-			return static_cast<std::size_t>(m_IntData[0]);
-		}
-		else
-		{
-			throw GenericError{"Invalid or Unimplemented CommandType passed to As<>"};
-		}
-	}
-}
-*/

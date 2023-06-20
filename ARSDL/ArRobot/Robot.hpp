@@ -1,8 +1,5 @@
 #pragma once 
-#include "STD.hpp"
-#include "Engine.hpp"
-#include "Util/Grid.hpp"
-#include "Util/Camera.hpp"
+#include "Arge.hpp"
 
 #include "Command.hpp"
 #include "ArRobotException.hpp"
@@ -27,6 +24,8 @@ namespace ArRobot {
 
 	private:
 		void Execute(Command const& cmd);
+		void HandleCall(Command const& cmd);
+		void HandleReturn();
 		void HandleMove(Command const& cmd);
 		void HandleCheckDir(Command const& cmd);
 		void HandleBinaryOp(Command const& cmd);
@@ -60,13 +59,13 @@ namespace ArRobot {
 		[[nodiscard]]
 		constexpr std::size_t MemorySize() const
 		{
-			return m_MemSlots.size();
+			return m_GlobalMemory.size();
 		}
 
 		[[nodiscard]]
 		constexpr std::int32_t Deref(std::size_t addr) const
 		{
-			return m_MemSlots[addr];
+			return m_GlobalMemory[addr];
 		}
 
 		[[nodiscard]]
@@ -94,8 +93,8 @@ namespace ArRobot {
 	private:
 		Arge::Grid<BlockType>& m_ParentGrid;
 
-		// Reversing the hasher and the equal_to operator will give you a cryptic error message,
-		// and will not be caught by the intellisense.
+		// Switching the hasher and the equal_to operator will give you a cryptic error message,
+		// and will not be caught by intellisense.
 		std::unordered_map<
 			std::string, std::size_t, MyStringHasher, std::equal_to<>
 		> m_LabelMap{};
@@ -105,12 +104,8 @@ namespace ArRobot {
 		bool bDebugPrint{};
 		bool bDebugVisuals{};
 
-		std::vector<std::int32_t> m_MemSlots{};
-		std::vector<std::int32_t> m_Registers{};
-		std::int32_t m_StackPtr{};
-		std::unordered_map<
-			std::string, std::size_t, MyStringHasher, std::equal_to<>
-		> m_VarAddrMap{};
+		// Brace initialization does not work here.
+		std::vector<std::int32_t> m_GlobalMemory = std::vector<std::int32_t>(16);
 
 		std::int32_t m_X{};
 		std::int32_t m_Y{};

@@ -720,7 +720,7 @@ extern DECLSPEC SDL_AudioStatus SDLCALL SDL_GetAudioStatus(void);
  * \sa SDL_PauseAudioDevice
  */
 extern DECLSPEC SDL_AudioStatus SDLCALL SDL_GetAudioDeviceStatus(SDL_AudioDeviceID dev);
-/* @} *//* Audio State */
+/* @} *//* Audio St */
 
 /**
  *  \name Pause audio functions

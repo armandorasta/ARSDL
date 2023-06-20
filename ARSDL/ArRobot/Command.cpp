@@ -19,7 +19,6 @@ namespace ArRobot {
 		case Halt:      return "Halt\n";
 		case MemSet:    return std::format("[MemSet](addr={}, val={})\n", As<MemSet>().addr, As<MemSet>().value);
 		case MemCopy:   return std::format("[MemCopy](to={}, from={})\n", As<MemCopy>().toAddr, As<MemCopy>().fromAddr);
-		case Increment: return std::format("[Increment](addr={}, del={})\n", As<Increment>().addr, As<Increment>().value);
 		case BinaryOp:  
 		{
 			auto const& [opCode, lhs, rhs] { As<BinaryOp>() };

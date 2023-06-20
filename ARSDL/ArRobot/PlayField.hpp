@@ -1,7 +1,5 @@
 #pragma once
-#include "STD.hpp"
-#include "Util/Grid.hpp"
-#include "Util/Camera.hpp"
+#include "Arge.hpp"
 #include "Robot.hpp"
 #include "BlockType.hpp"
 

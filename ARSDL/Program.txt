@@ -1,0 +1,28 @@
+#sticker WEST [-1, 0]
+
+#proc main
+{
+	: Start
+	MoveIfNotWall! $LEFT
+	Jump Start
+}
+
+(* 
+	This is just a macro.
+	The types are just for type-safety. 
+*)
+
+#proc DoIfNotWall(cmd(int, int) func, int x, int y)
+{
+	Check x, y, Block.Wall
+	JumpTrue Done
+	func x, y
+	: Done
+}
+
+#enum Block {
+	Nothing,
+	Wall,
+	Pit,
+	Item,
+}

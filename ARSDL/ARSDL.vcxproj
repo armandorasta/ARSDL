@@ -72,8 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\SDL2-2.26.5\lib\x64;$(ProjectDir)lib\SDL2_ttf-2.20.2\lib\x64;$(ProjectDir)lib\SDL2_image-2.6.3\lib\x64</LibraryPath>
-    <IncludePath>$(ProjectDir)Source;$(ProjectDir);$(ProjectDir)lib\SDL2_ttf-2.20.2\include;$(ProjectDir)lib\SDL2-2.26.5\include;$(ProjectDir)lib\glad\include;$(ProjectDir)lib\SDL2_image-2.6.3\include;$(IncludePath)</IncludePath>
-    <SourcePath>$(ProjectDir)lib\glad\src;$(SourcePath)</SourcePath>
+    <IncludePath>$(ProjectDir);$(ProjectDir)Arge;$(ProjectDir)lib\SDL2_ttf-2.20.2\include;$(ProjectDir)lib\SDL2-2.26.5\include;$(ProjectDir)lib\glad\include;$(ProjectDir)lib\SDL2_image-2.6.3\include;$(IncludePath)</IncludePath>
+    <SourcePath>$(ProjectDir)Arge;$(ProjectDir)lib\glad\src;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(ProjectDir)lib\SDL2-2.26.5\lib\x64;$(ProjectDir)lib\SDL2_ttf-2.20.2\lib\x64;$(ProjectDir)lib\SDL2_image-2.6.3\lib\x64</LibraryPath>
@@ -159,28 +159,33 @@
     <ClCompile Include="ArRobot\Command.cpp" />
     <ClCompile Include="ArRobot\PlayField.cpp" />
     <ClCompile Include="ArRobot\Robot.cpp" />
-    <ClCompile Include="Source\Color.cpp" />
-    <ClCompile Include="Source\Engine.cpp" />
-    <ClCompile Include="Source\Event.cpp" />
-    <ClCompile Include="Source\Font.cpp" />
-    <ClCompile Include="Source\Keyboard.cpp" />
-    <ClCompile Include="Source\Mouse.cpp" />
-    <ClCompile Include="Source\Renderer.cpp" />
-    <ClCompile Include="Source\Surface.cpp" />
-    <ClCompile Include="Source\Texture.cpp" />
-    <ClCompile Include="Source\Util\Camera.cpp" />
-    <ClCompile Include="Source\Util\CameraDragger.cpp" />
-    <ClCompile Include="Source\Util\CameraWheelScalar.cpp" />
-    <ClCompile Include="Source\Window.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\ArSDLError.cpp" />
-    <ClCompile Include="Source\Vec2.cpp" />
-    <ClCompile Include="Source\pch.cpp">
+    <ClCompile Include="ArRobot\Token.cpp" />
+    <ClCompile Include="ArRobot\Tokenizer.cpp" />
+    <ClCompile Include="ArRobot\Util\NumberParser.cpp" />
+    <ClCompile Include="ArRobot\Util\Random.cpp" />
+    <ClCompile Include="Arge\Color.cpp" />
+    <ClCompile Include="Arge\Engine.cpp" />
+    <ClCompile Include="Arge\Event.cpp" />
+    <ClCompile Include="Arge\Font.cpp" />
+    <ClCompile Include="Arge\Keyboard.cpp" />
+    <ClCompile Include="Arge\Mouse.cpp" />
+    <ClCompile Include="Arge\Renderer.cpp" />
+    <ClCompile Include="Arge\Surface.cpp" />
+    <ClCompile Include="Arge\Texture.cpp" />
+    <ClCompile Include="Arge\Util\Camera.cpp" />
+    <ClCompile Include="Arge\Util\CameraDragger.cpp" />
+    <ClCompile Include="Arge\Util\CameraWheelScalar.cpp" />
+    <ClCompile Include="Arge\Window.cpp" />
+    <ClCompile Include="Arge\Main.cpp" />
+    <ClCompile Include="Arge\ArSDLError.cpp" />
+    <ClCompile Include="Arge\Vec2.cpp" />
+    <ClCompile Include="Arge\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Arge\Arge.hpp" />
     <ClInclude Include="ArRobot\ArRobotException.hpp" />
     <ClInclude Include="ArRobot\BlockType.hpp" />
     <ClInclude Include="ArRobot\Direction.hpp" />
@@ -188,26 +193,30 @@
     <ClInclude Include="ArRobot\PlayField.hpp" />
     <ClInclude Include="ArRobot\Robot.hpp" />
     <ClInclude Include="ArRobot\Command.hpp" />
+    <ClInclude Include="ArRobot\Tokenizer.hpp" />
+    <ClInclude Include="ArRobot\Token.hpp" />
+    <ClInclude Include="ArRobot\Util\NumberParser.hpp" />
+    <ClInclude Include="ArRobot\Util\Random.hpp" />
     <ClInclude Include="Source\Math\CameraDragger.hpp" />
     <ClInclude Include="Source\Math\Camera.hpp" />
     <ClInclude Include="Source\Math\CameraWheelScalar.hpp" />
-    <ClInclude Include="Source\Mouse.hpp" />
-    <ClInclude Include="Source\KeyState.hpp" />
-    <ClInclude Include="Source\Keyboard.hpp" />
-    <ClInclude Include="Source\Event.hpp" />
-    <ClInclude Include="Source\Engine.hpp" />
-    <ClInclude Include="Source\PointBase.hpp" />
-    <ClInclude Include="Source\Point.hpp" />
-    <ClInclude Include="Source\RectBase.hpp" />
-    <ClInclude Include="Source\Rect.hpp" />
-    <ClInclude Include="Source\RectF.hpp" />
-    <ClInclude Include="Source\Font.hpp" />
-    <ClInclude Include="Source\Renderer.hpp" />
-    <ClInclude Include="Source\Enums.hpp" />
-    <ClInclude Include="Source\ArGenericError.hpp" />
-    <ClInclude Include="Source\Surface.hpp" />
-    <ClInclude Include="Source\Texture.hpp" />
-    <ClInclude Include="Source\Color.hpp" />
+    <ClInclude Include="Arge\Mouse.hpp" />
+    <ClInclude Include="Arge\KeyState.hpp" />
+    <ClInclude Include="Arge\Keyboard.hpp" />
+    <ClInclude Include="Arge\Event.hpp" />
+    <ClInclude Include="Arge\Engine.hpp" />
+    <ClInclude Include="Arge\PointBase.hpp" />
+    <ClInclude Include="Arge\Point.hpp" />
+    <ClInclude Include="Arge\RectBase.hpp" />
+    <ClInclude Include="Arge\Rect.hpp" />
+    <ClInclude Include="Arge\RectF.hpp" />
+    <ClInclude Include="Arge\Font.hpp" />
+    <ClInclude Include="Arge\Renderer.hpp" />
+    <ClInclude Include="Arge\Enums.hpp" />
+    <ClInclude Include="Arge\ArGenericError.hpp" />
+    <ClInclude Include="Arge\Surface.hpp" />
+    <ClInclude Include="Arge\Texture.hpp" />
+    <ClInclude Include="Arge\Color.hpp" />
     <ClInclude Include="lib\glad\include\glad\glad.h" />
     <ClInclude Include="lib\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="lib\SDL2-2.26.5\include\begin_code.h" />
@@ -289,19 +298,19 @@
     <ClInclude Include="lib\SDL2-2.26.5\include\SDL_video.h" />
     <ClInclude Include="lib\SDL2-2.26.5\include\SDL_vulkan.h" />
     <ClInclude Include="lib\SDL2_image-2.6.3\include\SDL_image.h" />
-    <ClInclude Include="Source\ArSDLError.hpp" />
-    <ClInclude Include="Source\Util\Array2D.hpp" />
-    <ClInclude Include="Source\Util\Camera.hpp" />
-    <ClInclude Include="Source\Util\CameraDragger.hpp" />
-    <ClInclude Include="Source\Util\CameraWheelScalar.hpp" />
-    <ClInclude Include="Source\Util\Grid.hpp" />
-    <ClInclude Include="Source\Window.hpp" />
-    <ClInclude Include="Source\pch.h" />
+    <ClInclude Include="Arge\ArSDLError.hpp" />
+    <ClInclude Include="Arge\Util\Array2D.hpp" />
+    <ClInclude Include="Arge\Util\Camera.hpp" />
+    <ClInclude Include="Arge\Util\CameraDragger.hpp" />
+    <ClInclude Include="Arge\Util\CameraWheelScalar.hpp" />
+    <ClInclude Include="Arge\Util\Grid.hpp" />
+    <ClInclude Include="Arge\Window.hpp" />
+    <ClInclude Include="Arge\pch.h" />
     <ClInclude Include="Source\RectF.h" />
-    <ClInclude Include="Source\STD.hpp" />
-    <ClInclude Include="Source\Util.hpp" />
-    <ClInclude Include="Source\Vec2.hpp" />
-    <ClInclude Include="Source\Vertex.hpp" />
+    <ClInclude Include="Arge\ArgeCore.hpp" />
+    <ClInclude Include="Arge\Util.hpp" />
+    <ClInclude Include="Arge\Vec2.hpp" />
+    <ClInclude Include="Arge\Vertex.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL2.dll" />
@@ -321,6 +330,7 @@
     <Text Include="lib\SDL2_image-2.6.3\CHANGES.txt" />
     <Text Include="lib\SDL2_image-2.6.3\LICENSE.txt" />
     <Text Include="lib\SDL2_image-2.6.3\README.txt" />
+    <Text Include="Program.txt" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="NatvisFile.natvis" />

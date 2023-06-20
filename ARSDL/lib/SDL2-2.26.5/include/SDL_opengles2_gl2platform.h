@@ -3,7 +3,7 @@
 
 /*
 ** Copyright 2017-2020 The Khronos Group Inc.
-** SPDX-License-Identifier: Apache-2.0
+** SPDX-License-Name: Apache-2.0
 */
 
 /* Platform-specific types and definitions for OpenGL ES 2.X  gl2.h

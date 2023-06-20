@@ -7,7 +7,7 @@ extern "C" {
 
 /*
 ** Copyright 2013-2020 The Khronos Group Inc.
-** SPDX-License-Identifier: MIT
+** SPDX-License-Name: MIT
 **
 ** This header is generated from the Khronos OpenGL / OpenGL ES XML
 ** API Registry. The current version of the Registry, generator scripts

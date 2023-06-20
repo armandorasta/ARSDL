@@ -1,5 +1,4 @@
 #pragma once
-#include "STD.hpp"
 #include "ArRobotException.hpp"
 
 namespace ArRobot {

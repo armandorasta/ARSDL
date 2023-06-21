@@ -21,8 +21,8 @@ namespace Arge {
 		[[nodiscard]]
 		constexpr TValue& At(size_t x, size_t y)
 		{
-			ARSDL_DA(x < m_Width);
-			ARSDL_DA(y < m_Height);
+			ARGE_DA(x < m_Width);
+			ARGE_DA(y < m_Height);
 			return m_Data[x + y * m_Width];
 		}
 
@@ -35,7 +35,7 @@ namespace Arge {
 		[[nodiscard]]
 		constexpr TValue& AtIndex(size_t index)
 		{
-			ARSDL_DA(index < GetSize());
+			ARGE_DA(index < GetSize());
 			return m_Data[index];
 		}
 

@@ -6,7 +6,7 @@
 #include "RectF.hpp"
 #include "Rect.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Surface
@@ -64,7 +64,7 @@ namespace Arge {
 		Rect GetClipRect(); // Throws when there's none.
 
 	public:
-#ifdef ARSDL_DEBUG_MODE
+#ifdef ARGE_DEBUG_MODE
 		bool m_bLocked{};
 #endif
 		SDL_Surface* ptr{};

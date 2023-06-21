@@ -2,7 +2,7 @@
 
 #include "ArgeCore.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Color : public SDL_Color

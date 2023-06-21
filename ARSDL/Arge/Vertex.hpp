@@ -2,7 +2,7 @@
 #include "Vec2.hpp"
 #include "Color.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Vertex : public SDL_Vertex 

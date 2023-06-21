@@ -25,8 +25,10 @@ namespace Arge {
 
 	KeyState const& Keyboard::operator[](char ch) const
 	{
+#ifdef ARGE_DEBUG_MODE
 		auto const myChar{std::tolower(ch)};
-		ARSDL_DA('a' <= myChar && myChar <= 'z');
+#endif
+		ARGE_DA('a' <= myChar && myChar <= 'z');
 		return m_keys[SDL_GetScancodeFromKey(static_cast<SDL_Keycode>(ch))];
 	}
 }

@@ -4,7 +4,7 @@
 #include "ArSDLError.hpp"
 #include "Vec2.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class WindowEvent : SDL_WindowEvent
@@ -26,14 +26,14 @@ namespace Arge {
 		// Used for WindowEventID::Moved
 		constexpr Vec2 GetNewLocation()
 		{
-			ARSDL_ERROR_DEBUG_THROW_IF(event != SDL_WINDOWEVENT_MOVED);
+			ARGE_ERROR_THROW_IF(event != SDL_WINDOWEVENT_MOVED);
 			return {static_cast<float>(data1), static_cast<float>(data2)};
 		}
 
 		// Used for WindowEventID::Resized
 		constexpr WindowSize GetNewSize()
 		{
-			ARSDL_ERROR_DEBUG_THROW_IF(event != SDL_WINDOWEVENT_RESIZED);
+			ARGE_ERROR_DEBUG_THROW_IF(event != SDL_WINDOWEVENT_RESIZED);
 			return {static_cast<size_t>(data1), static_cast<size_t>(data2)};
 		}
 	};

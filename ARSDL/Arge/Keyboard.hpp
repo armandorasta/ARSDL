@@ -3,7 +3,7 @@
 #include "KeyState.hpp"
 #include "Enums.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Keyboard

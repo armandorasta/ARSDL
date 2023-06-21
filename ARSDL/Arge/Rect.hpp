@@ -4,7 +4,7 @@
 #include "Vec2.hpp"
 #include "RectBase.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Rect : public SDL_Rect, public RectBase<Rect, int>

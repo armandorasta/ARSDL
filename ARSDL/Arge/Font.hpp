@@ -3,8 +3,8 @@
 #include "Color.hpp"
 #include "Enums.hpp"
 
-#include <SDL.h>
-#include <SDL_ttf.h>
+#include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 
 namespace Arge {
 	class Surface;

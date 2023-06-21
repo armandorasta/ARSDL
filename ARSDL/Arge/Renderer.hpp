@@ -8,7 +8,7 @@
 #include "Rect.hpp"
 #include "Vertex.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Window;

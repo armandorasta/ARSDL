@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ArSDLError.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	ArSDLError::ArSDLError(std::string_view message, std::string_view file, size_t line) :

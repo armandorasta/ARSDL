@@ -3,7 +3,7 @@
 #include "ArgeCore.hpp"
 #include "RectBase.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class RectF : public SDL_FRect, public RectBase<RectF, float>

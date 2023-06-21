@@ -1,5 +1,5 @@
 #pragma once
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 #include "ArgeCore.hpp"
 #include "Vec2.hpp"

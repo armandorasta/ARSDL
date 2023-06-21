@@ -10,7 +10,7 @@ namespace Arge {
 			static_cast<int>(height), static_cast<SDL_WindowFlags>(flags)
 		)}
 	{
-		ARSDL_ERROR_HANDLE_NULL(ptr);
+		ARGE_ERROR_HANDLE_NULL(ptr);
 	}
 
 	Window& Window::operator=(Window&& rhs) 
@@ -114,8 +114,8 @@ namespace Arge {
 
 	void Window::SetSize(size_t newWidth, size_t newHeight)
 	{
-		ARSDL_DA(newWidth > 0);
-		ARSDL_DA(newHeight > 0);
+		ARGE_DA(newWidth > 0);
+		ARGE_DA(newHeight > 0);
 		SDL_SetWindowSize(ptr, static_cast<int>(newWidth), static_cast<int>(newHeight));
 	}
 
@@ -156,7 +156,7 @@ namespace Arge {
 
 	void Window::SetFullScreen(FullScreenMode toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetWindowFullscreen(ptr, static_cast<SDL_WindowFlags>(toWhat)));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetWindowFullscreen(ptr, static_cast<SDL_WindowFlags>(toWhat)));
 	}
 	
 	void Window::ShowCursor(bool toggle)

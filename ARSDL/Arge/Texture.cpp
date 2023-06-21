@@ -4,7 +4,7 @@
 #include "ArSDLError.hpp"
 #include "Surface.hpp"
 
-#include <SDL_image.h>
+#include <SDL/SDL_image.h>
 
 namespace Arge {
 	Texture& Texture::operator=(Texture&& rhs) noexcept
@@ -27,7 +27,7 @@ namespace Arge {
 		Texture res{};
 		res.ptr = SDL_CreateTexture(gfx.ptr, SDL_PixelFormatEnum::SDL_PIXELFORMAT_BGRA8888,
 			static_cast<int>(access), static_cast<int>(width), static_cast<int>(height));
-		ARSDL_ERROR_HANDLE_NULL(res.ptr);
+		ARGE_ERROR_HANDLE_NULL(res.ptr);
 		return res;
 	}
 
@@ -35,7 +35,7 @@ namespace Arge {
 	{
 		Texture res{};
 		res.ptr = SDL_CreateTextureFromSurface(gfx.ptr, sur.ptr);
-		ARSDL_ERROR_HANDLE_NULL(res.ptr);
+		ARGE_ERROR_HANDLE_NULL(res.ptr);
 		return res;
 	}
 
@@ -43,13 +43,13 @@ namespace Arge {
 	{
 		Texture res{};
 		res.ptr = IMG_LoadTexture(gfx.ptr, fileName.data());
-		ARSDL_ERROR_HANDLE_NULL(res.ptr);
+		ARGE_ERROR_HANDLE_NULL(res.ptr);
 		return res;
 	}
 
 	void Texture::LockRectForWrite(Rect const& rect, Surface sur)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_LockTextureToSurface(ptr, &rect, &sur.ptr));
+		ARGE_ERROR_HANDLE_NEG(SDL_LockTextureToSurface(ptr, &rect, &sur.ptr));
 	}
 
 	void Texture::LockRectForWrite(Rect const& rect, void** pixelArr, size_t& pitch)
@@ -66,25 +66,25 @@ namespace Arge {
 
 	void Texture::SetBlendMode(BlendMode toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetTextureBlendMode(ptr, static_cast<SDL_BlendMode>(toWhat)));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetTextureBlendMode(ptr, static_cast<SDL_BlendMode>(toWhat)));
 	}
 
 	BlendMode Texture::GetBlendMode() const
 	{
 		SDL_BlendMode mode{};
-		ARSDL_ERROR_HANDLE_NEG(SDL_GetTextureBlendMode(ptr, &mode));
+		ARGE_ERROR_HANDLE_NEG(SDL_GetTextureBlendMode(ptr, &mode));
 		return static_cast<BlendMode>(mode);
 	}
 
 	void Texture::SetScaleMode(ScaleMode toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetTextureScaleMode(ptr, static_cast<SDL_ScaleMode>(toWhat)));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetTextureScaleMode(ptr, static_cast<SDL_ScaleMode>(toWhat)));
 	}
 
 	ScaleMode Texture::GetScaleMode() const
 	{
 		SDL_ScaleMode mode{};
-		ARSDL_ERROR_HANDLE_NEG(SDL_GetTextureScaleMode(ptr, &mode));
+		ARGE_ERROR_HANDLE_NEG(SDL_GetTextureScaleMode(ptr, &mode));
 		return static_cast<ScaleMode>(mode);
 	}
 

@@ -24,22 +24,22 @@ namespace Arge {
 	};
 }
 
-#define ARSDL_ERROR_THROW_IF(_cond)  \
+#define ARGE_ERROR_THROW_IF(_cond)  \
 	if (_cond) throw ArSDLError{#_cond, __FILE__, static_cast<std::size_t>(__LINE__)}
 
-#define ARSDL_ERROR_HANDLE_NEG(_call)  ARSDL_ERROR_THROW_IF((_call) < 0)
-#define ARSDL_ERROR_HANDLE_NULL(_call) ARSDL_ERROR_THROW_IF((_call) == nullptr)
+#define ARGE_ERROR_HANDLE_NEG(_call)  ARGE_ERROR_THROW_IF((_call) < 0)
+#define ARGE_ERROR_HANDLE_NULL(_call) ARGE_ERROR_THROW_IF((_call) == nullptr)
 
-#ifdef ARSDL_DEBUG_MODE
+#ifdef ARGE_DEBUG_MODE
 
-#define ARSDL_ERROR_DEBUG_THROW_IF(_cond)    ARSDL_ERROR_THROW_IF(_cond)
-#define ARSDL_ERROR_DEBUG_HANDLE_NEG(_call)  ARSDL_ERROR_HANDLE_NEG(_call)
-#define ARSDL_ERROR_DEBUG_HANDLE_NULL(_call) ARSDL_ERROR_HANDLE_NULL(_call)
+#define ARGE_ERROR_DEBUG_THROW_IF(_cond)    ARGE_ERROR_THROW_IF(_cond)
+#define ARGE_ERROR_DEBUG_HANDLE_NEG(_call)  ARGE_ERROR_HANDLE_NEG(_call)
+#define ARGE_ERROR_DEBUG_HANDLE_NULL(_call) ARGE_ERROR_HANDLE_NULL(_call)
 
-#elif // ^^^^ ARSDL_DEBUG_MODE vvvv !ARSDL_DEBUG_MODE
+#else // ^^^^ ARGE_DEBUG_MODE vvvv !ARGE_DEBUG_MODE
 
-#define ARSDL_ERROR_DEBUG_THROW_IF(_cond)
-#define ARSDL_ERROR_DEBUG_HANDLE_NEG(_call)
-#define ARSDL_ERROR_DEBUG_HANDLE_NULL(_call)
+#define ARGE_ERROR_DEBUG_THROW_IF(_cond)
+#define ARGE_ERROR_DEBUG_HANDLE_NEG(_call)
+#define ARGE_ERROR_DEBUG_HANDLE_NULL(_call)
 
 #endif

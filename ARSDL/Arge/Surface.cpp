@@ -4,7 +4,7 @@
 #include "ArSDLError.hpp"
 #include "Rect.hpp"
 
-#include <SDL_image.h>
+#include <SDL/SDL_image.h>
 
 namespace Arge {
 	Surface& Surface::operator=(Surface&& rhs) noexcept
@@ -35,21 +35,21 @@ namespace Arge {
 			Color::GetAlphaMask()
 		)}
 	{
-		ARSDL_ERROR_HANDLE_NULL(ptr);
+		ARGE_ERROR_HANDLE_NULL(ptr);
 	}
 
 	Surface Surface::FromFile(std::string_view fileName)
 	{
 		Surface sur{};
 		sur.ptr = IMG_Load(fileName.data());
-		ARSDL_ERROR_HANDLE_NULL(sur.ptr);
+		ARGE_ERROR_HANDLE_NULL(sur.ptr);
 		return sur;
 	}
 
 	void Surface::Lock()
 	{
-#ifdef ARSDL_DEBUG_MODE
-		ARSDL_DA(!m_bLocked);
+#ifdef ARGE_DEBUG_MODE
+		ARGE_DA(!m_bLocked);
 		m_bLocked = true;
 #endif
 		SDL_LockSurface(ptr);
@@ -57,8 +57,8 @@ namespace Arge {
 
 	void Surface::Unlock()
 	{
-#ifdef ARSDL_DEBUG_MODE
-		ARSDL_DA(m_bLocked);
+#ifdef ARGE_DEBUG_MODE
+		ARGE_DA(m_bLocked);
 		m_bLocked = false;
 #endif
 		SDL_UnlockSurface(ptr);
@@ -79,8 +79,8 @@ namespace Arge {
 
 	void Surface::PutPixelUnchecked(size_t x, size_t y, Color color)
 	{
-		ARSDL_DA(x < static_cast<size_t>(ptr->w) && y < static_cast<size_t>(ptr->h));
-#ifdef ARSDL_DEBUG_MODE
+		ARGE_DA(x < static_cast<size_t>(ptr->w) && y < static_cast<size_t>(ptr->h));
+#ifdef ARGE_DEBUG_MODE
 		if (!m_bLocked)
 		{
 			throw ArGenericError{"Tried to modify a surface before locking it"};
@@ -118,30 +118,30 @@ namespace Arge {
 			static_cast<int>(x), static_cast<int>(y), 
 			static_cast<int>(w), static_cast<int>(h)
 		};
-		ARSDL_ERROR_HANDLE_NEG(SDL_FillRect(ptr, &rect, color.AsDword()));
+		ARGE_ERROR_HANDLE_NEG(SDL_FillRect(ptr, &rect, color.AsDword()));
 	}
 
 	void Surface::FillRect(Rect const& rect, Color color)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_FillRect(ptr, &rect, color.AsDword()));
+		ARGE_ERROR_HANDLE_NEG(SDL_FillRect(ptr, &rect, color.AsDword()));
 	}
 
 	void Surface::FillRects(Rect const* rects, size_t count, Color color)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_FillRects(ptr, rects, static_cast<int>(count), color.AsDword()));
+		ARGE_ERROR_HANDLE_NEG(SDL_FillRects(ptr, rects, static_cast<int>(count), color.AsDword()));
 	}
 
 	Surface Surface::Doublicate() const
 	{
 		Surface res{};
 		res.ptr = SDL_DuplicateSurface(ptr);
-		ARSDL_ERROR_HANDLE_NULL(res.ptr);
+		ARGE_ERROR_HANDLE_NULL(res.ptr);
 		return res;
 	}
 
 	void Surface::SaveToFile(std::string_view fileName)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SaveBMP(ptr, fileName.data()));
+		ARGE_ERROR_HANDLE_NEG(SDL_SaveBMP(ptr, fileName.data()));
 	}
 
 	bool Surface::HasRLE() const
@@ -151,48 +151,48 @@ namespace Arge {
 
 	void Surface::SetRLE(bool toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetSurfaceRLE(ptr, toWhat));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetSurfaceRLE(ptr, toWhat));
 	}
 
 	void Surface::SetColorKey(Color color)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetColorKey(ptr, 1, color.AsDword()));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetColorKey(ptr, 1, color.AsDword()));
 	}
 
 	void Surface::DisableColorKey()
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetColorKey(ptr, 0, 0));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetColorKey(ptr, 0, 0));
 	}
 
 	Color Surface::GetColorKey() const
 	{
 		uint32_t dword;
-		ARSDL_ERROR_HANDLE_NEG(SDL_GetColorKey(ptr, &dword));
+		ARGE_ERROR_HANDLE_NEG(SDL_GetColorKey(ptr, &dword));
 
 		return {dword};
 	}
 
 	void Surface::SetBlendMode(BlendMode toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetSurfaceBlendMode(ptr, static_cast<SDL_BlendMode>(toWhat)));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetSurfaceBlendMode(ptr, static_cast<SDL_BlendMode>(toWhat)));
 	}
 
 	BlendMode Surface::GetBlendMode() const
 	{
 		SDL_BlendMode mode;
-		ARSDL_ERROR_HANDLE_NEG(SDL_GetSurfaceBlendMode(ptr, &mode));
+		ARGE_ERROR_HANDLE_NEG(SDL_GetSurfaceBlendMode(ptr, &mode));
 
 		return static_cast<BlendMode>(mode);
 	}
 
 	void Surface::SetClipRect(Rect const& rect)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetClipRect(ptr, &rect));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetClipRect(ptr, &rect));
 	}
 
 	void Surface::DisableClipRect()
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetClipRect(ptr, nullptr));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetClipRect(ptr, nullptr));
 	}
 
 	Rect Surface::GetClipRect()

@@ -3,7 +3,7 @@
 #include "PointBase.hpp"
 #include "Util.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Vec2 : public SDL_FPoint, public Secret::PointBase<Vec2, float>

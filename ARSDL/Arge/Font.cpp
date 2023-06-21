@@ -3,7 +3,7 @@
 #include "ArSDLError.hpp"
 #include "Surface.hpp"
 
-#include <SDL_ttf.h>
+#include <SDL/SDL_ttf.h>
 
 namespace Arge {
 	Font& Font::operator=(Font&& rhs)
@@ -24,7 +24,7 @@ namespace Arge {
 	Font::Font(std::string_view fileName, size_t pointSize) : 
 		ptr{TTF_OpenFont(fileName.data(), static_cast<int>(pointSize))}
 	{
-		ARSDL_ERROR_HANDLE_NULL(ptr);
+		ARGE_ERROR_HANDLE_NULL(ptr);
 	}
 
 	Surface Font::RenderText(std::string_view text, Color fg)

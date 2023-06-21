@@ -36,7 +36,7 @@ namespace Arge {
 		void UnhandleLastEvent();
 
 	private:
-		float GetFrameDelta();
+		static float GetFrameDelta();
 		void UpdateTitle(float dt);
 		void HandleEvents() const;
 		void UpdateInput();

@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Arge\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Arge\ArSDLError.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -57,9 +54,6 @@
     <ClCompile Include="Arge\Mouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ArRobot\ArRobotException.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Arge\Util\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,272 +63,8 @@
     <ClCompile Include="Arge\Util\CameraWheelScalar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ArRobot\Robot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\PlayField.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\Command.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\Tokenizer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\Token.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\Util\Random.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ArRobot\Util\NumberParser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\glad\include\glad\glad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\glad\include\KHR\khrplatform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\begin_code.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\close_code.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_assert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_atomic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_audio.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_bits.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_blendmode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_clipboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_cpuinfo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_egl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_endian.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_error.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_events.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_filesystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_gamecontroller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_gesture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_guid.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_haptic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_hidapi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_hints.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_joystick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_keyboard.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_keycode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_loadso.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_locale.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_messagebox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_metal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_misc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_mouse.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_mutex.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_name.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengl_glext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles2_gl2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles2_gl2ext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles2_gl2platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_opengles2_khrplatform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_pixels.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_power.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_quit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_rect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_render.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_revision.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_rwops.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_scancode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_sensor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_shape.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_stdinc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_surface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_system.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_syswm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_assert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_compare.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_crc32.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_fuzzer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_harness.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_images.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_log.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_md5.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_test_random.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_thread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_touch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_types.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_video.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2-2.26.5\include\SDL_vulkan.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\SDL2_image-2.6.3\include\SDL_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Source\RectF.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -410,15 +140,6 @@
     <ClInclude Include="Arge\Mouse.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ArRobot\Robot.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Command.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\ArRobotException.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Arge\Util\Camera.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -432,39 +153,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Arge\Util\Grid.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\CameraDragger.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Camera.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\CameraWheelScalar.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\PlayField.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\BlockType.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\OpCode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Direction.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Tokenizer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Token.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Util\Random.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ArRobot\Util\NumberParser.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Arge\Arge.hpp">
@@ -485,15 +173,9 @@
     <Font Include="resources\Montserrat-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="lib\SDL2_ttf-2.20.2\lib\x64\SDL2_ttf.lib" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="lib\SDL2_image-2.6.3\CHANGES.txt" />
-    <Text Include="lib\SDL2_image-2.6.3\LICENSE.txt" />
-    <Text Include="lib\SDL2_image-2.6.3\README.txt" />
-    <Text Include="Program.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <Natvis Include="NatvisFile.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Program.txt" />
   </ItemGroup>
 </Project>

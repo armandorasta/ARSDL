@@ -3,7 +3,7 @@
 #include "KeyState.hpp"
 #include "Vec2.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Mouse

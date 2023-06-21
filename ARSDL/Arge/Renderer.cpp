@@ -10,7 +10,7 @@ namespace Arge {
 	Renderer::Renderer(Window& window) :
 		ptr{SDL_CreateRenderer(window.ptr, -1, SDL_RendererFlags::SDL_RENDERER_ACCELERATED)}
 	{
-		ARSDL_ERROR_HANDLE_NULL(ptr);
+		ARGE_ERROR_HANDLE_NULL(ptr);
 	}
 
 	Renderer::~Renderer()
@@ -31,13 +31,13 @@ namespace Arge {
 	void Renderer::Clear(Color color)
 	{
 		SetColor(color);
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderClear(ptr));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderClear(ptr));
 	}
 
 	void Renderer::DrawPoint(Vec2 const& pos, Color color)
 	{
 		SetColor(color);
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderDrawPointF(ptr, pos.x, pos.y));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderDrawPointF(ptr, pos.x, pos.y));
 	}
 
 	void Renderer::DrawLine(Vec2 const& v0, Vec2 const& v1, Color color, float thick)
@@ -45,7 +45,7 @@ namespace Arge {
 		SetColor(color);
 		if (std::abs(thick - 1.0f) < 0.0000001f)
 		{
-			ARSDL_ERROR_HANDLE_NEG(SDL_RenderDrawLineF(ptr, v0.x, v0.y, v1.x, v1.y));
+			ARGE_ERROR_HANDLE_NEG(SDL_RenderDrawLineF(ptr, v0.x, v0.y, v1.x, v1.y));
 			return;
 		}
 
@@ -67,7 +67,7 @@ namespace Arge {
 			{v0 - vLeft, color},
 		}};
 		std::array constexpr const inds{0, 1, 2, 2, 3, 0};
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
@@ -81,7 +81,7 @@ namespace Arge {
 		if (std::abs(thick - 1.0f) < 0.0000001f)
 		{
 			SetColor(color);
-			ARSDL_ERROR_HANDLE_NEG(SDL_RenderDrawRectF(ptr, &rect));
+			ARGE_ERROR_HANDLE_NEG(SDL_RenderDrawRectF(ptr, &rect));
 			return;
 		}
 		else if (thick >= std::min(*&rect.w, *&rect.h))
@@ -128,7 +128,7 @@ namespace Arge {
 			4, 5, 7, 7, 6, 4,
 			6, 7, 1, 1, 0, 6,
 		};
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
@@ -140,7 +140,7 @@ namespace Arge {
 	void Renderer::FillRect(RectF const& rect, Color color)
 	{
 		SetColor(color);
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderFillRectF(ptr, &rect));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderFillRectF(ptr, &rect));
 	}
 
 	void Renderer::DrawModel(std::vector<Vec2> const& points, Color color, float thick)
@@ -162,7 +162,7 @@ namespace Arge {
 				.color{color.r, color.g, color.b, color.a},
 			};
 		});
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
 			static_cast<int>(verts.size()), nullptr, 0));
 	}
 
@@ -248,7 +248,7 @@ namespace Arge {
 		inds.push_back(0);
 		inds.push_back(1);
 
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
@@ -272,18 +272,18 @@ namespace Arge {
 			inds.push_back(static_cast<int>(i));
 			inds.push_back(static_cast<int>(i) + 1);
 		}
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderGeometry(ptr, nullptr, verts.data(),
 			static_cast<int>(verts.size()), inds.data(), static_cast<int>(inds.size())));
 	}
 
 	void Renderer::DrawTexture(Texture& tex, RectF const& destRect, Rect const& srcRect)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, &srcRect, &destRect));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, &srcRect, &destRect));
 	}
 
 	void Renderer::DrawTexture(Texture& tex, RectF const& destRect)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, nullptr, &destRect));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderCopyF(ptr, tex.ptr, nullptr, &destRect));
 	}
 
 	void Renderer::RenderOnGPU(std::vector<ColorVertex> const& verts)
@@ -311,13 +311,13 @@ namespace Arge {
 
 	void Renderer::SetBlendMode(BlendMode mode)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetRenderDrawBlendMode(ptr, static_cast<SDL_BlendMode>(mode)));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetRenderDrawBlendMode(ptr, static_cast<SDL_BlendMode>(mode)));
 	}
 
 	BlendMode Renderer::GetBlendMode()
 	{
 		SDL_BlendMode mode{};
-		ARSDL_ERROR_HANDLE_NEG(SDL_GetRenderDrawBlendMode(ptr, &mode));
+		ARGE_ERROR_HANDLE_NEG(SDL_GetRenderDrawBlendMode(ptr, &mode));
 		return static_cast<BlendMode>(mode);
 	}
 
@@ -328,7 +328,7 @@ namespace Arge {
 
 	void Renderer::SetRenderTarget(Texture newTarget)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetRenderTarget(ptr, newTarget.ptr));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetRenderTarget(ptr, newTarget.ptr));
 	}
 
 	Texture Renderer::GetRenderTarget()
@@ -338,7 +338,7 @@ namespace Arge {
 
 	void Renderer::SetClipRect(Rect const& toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderSetClipRect(ptr, &toWhat));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderSetClipRect(ptr, &toWhat));
 	}
 
 	Rect Renderer::GetClipRect() const
@@ -350,7 +350,7 @@ namespace Arge {
 
 	void Renderer::DisableClipping()
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderSetClipRect(ptr, nullptr));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderSetClipRect(ptr, nullptr));
 	}
 
 	bool Renderer::IsClippingEnabled()
@@ -360,7 +360,7 @@ namespace Arge {
 
 	void Renderer::SetScale(float scaleX, float scaleY)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_RenderSetScale(ptr, scaleX, scaleY));
+		ARGE_ERROR_HANDLE_NEG(SDL_RenderSetScale(ptr, scaleX, scaleY));
 	}
 
 	Vec2 Renderer::GetScale() const
@@ -377,6 +377,6 @@ namespace Arge {
 
 	void Renderer::SetColor(Color toWhat)
 	{
-		ARSDL_ERROR_HANDLE_NEG(SDL_SetRenderDrawColor(ptr, toWhat.r, toWhat.g, toWhat.b, toWhat.a));
+		ARGE_ERROR_HANDLE_NEG(SDL_SetRenderDrawColor(ptr, toWhat.r, toWhat.g, toWhat.b, toWhat.a));
 	}
 }

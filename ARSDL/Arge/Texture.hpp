@@ -3,7 +3,7 @@
 #include "Enums.hpp"
 #include "Rect.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Renderer;

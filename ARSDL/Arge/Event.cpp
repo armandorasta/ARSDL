@@ -29,35 +29,38 @@ namespace Arge {
 
 	WindowEvent Event::AsWindowEvent() const
 	{
-		ARSDL_ERROR_DEBUG_THROW_IF(GetType() != EventType::WindowEvent);
+		ARGE_ERROR_DEBUG_THROW_IF(GetType() != EventType::WindowEvent);
 		return m_ev.window;
 	}
 
 	KeyboardEvent Event::AsKeyboardEvent() const
 	{
+#ifdef ARGE_DEBUG_MODE
 		auto const type{GetType()}; // Only used in debug mode.
-		ARSDL_ERROR_DEBUG_THROW_IF(type != EventType::KeyDown && type != EventType::KeyUp);
+#endif
+		ARGE_ERROR_DEBUG_THROW_IF(type != EventType::KeyDown && type != EventType::KeyUp);
 		return m_ev.key;
 	}
 
 	MouseMotionEvent Event::AsMouseMotionEvent() const
 	{
-		ARSDL_ERROR_DEBUG_THROW_IF(GetType() != EventType::MouseMotion);
+		ARGE_ERROR_DEBUG_THROW_IF(GetType() != EventType::MouseMotion);
 		return m_ev.motion;
 	}
 
 	MouseButtonEvent Event::AsMouseButtonEvent() const
 	{
-		[[maybe_unused]] // Only used in debug mode.
+#ifdef ARGE_DEBUG_MODE
 		auto const type{GetType()};
-		ARSDL_ERROR_DEBUG_THROW_IF(type != EventType::MouseButtonDown
+#endif
+		ARGE_ERROR_DEBUG_THROW_IF(type != EventType::MouseButtonDown
 		                        && type != EventType::MouseButtonUp);
 		return m_ev.button;
 	}
 
 	MouseWheelEvent Event::AsMouseWheelEvent() const
 	{
-		ARSDL_ERROR_DEBUG_THROW_IF(GetType() != EventType::MouseWheel);
+		ARGE_ERROR_DEBUG_THROW_IF(GetType() != EventType::MouseWheel);
 		return m_ev.wheel;
 	}
 }

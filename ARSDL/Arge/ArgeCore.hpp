@@ -32,10 +32,12 @@
 #include <charconv>
 #include <iomanip>
 
-#define ARSDL_DA(_cond) assert(_cond)
+#define ARGE_DA(_cond) assert(_cond)
 
 #ifndef NDEBUG
-#define ARSDL_DEBUG_MODE
+#define ARGE_DEBUG_MODE
+#else 
+#define ARGE_RELEASE_MODE
 #endif // ^^^^ NDEBUG
 
 namespace Arge {

@@ -1,7 +1,7 @@
 #pragma once
 #include "PointBase.hpp"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 
 namespace Arge {
 	class Point : public SDL_Point, public Secret::PointBase<Point, int>

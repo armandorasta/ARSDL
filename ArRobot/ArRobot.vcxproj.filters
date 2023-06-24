@@ -30,9 +30,6 @@
     <ClCompile Include="Source\Token.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -335,6 +332,9 @@
     <ClInclude Include="Source\Util\Random.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\KeywordType.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Lib\SDL2.lib" />
@@ -345,5 +345,8 @@
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
     <None Include="SDL2_ttf.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Program.txt" />
   </ItemGroup>
 </Project>

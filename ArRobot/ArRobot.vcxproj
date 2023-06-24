@@ -151,7 +151,6 @@
   <ItemGroup>
     <ClCompile Include="Source\ArRobotException.cpp" />
     <ClCompile Include="Source\Command.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -169,6 +168,7 @@
     <ClInclude Include="Source\BlockType.hpp" />
     <ClInclude Include="Source\Command.hpp" />
     <ClInclude Include="Source\Direction.hpp" />
+    <ClInclude Include="Source\KeywordType.hpp" />
     <ClInclude Include="Source\OpCode.hpp" />
     <ClInclude Include="Source\pch.hpp" />
     <ClInclude Include="Source\PlayField.hpp" />
@@ -270,6 +270,9 @@
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
     <None Include="SDL2_ttf.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Program.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

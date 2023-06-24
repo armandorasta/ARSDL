@@ -175,7 +175,4 @@
   <ItemGroup>
     <Natvis Include="NatvisFile.natvis" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="Program.txt" />
-  </ItemGroup>
 </Project>

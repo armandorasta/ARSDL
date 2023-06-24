@@ -85,10 +85,10 @@ namespace ArRobot {
 		auto resNum = std::int64_t {};
 		auto base = decltype(resNum) {10};
 		auto st {St::ParsingBegin};
-		auto offset = std::size_t {};
-		for (; offset < numStr.size(); ++offset)
+		auto it {numStr.cbegin()};
+		for (; it < numStr.end(); ++it)
 		{
-			auto const c {numStr[offset]};
+			auto const c {*it};
 			if (std::isspace(c) || !std::isalnum(c))
 			{
 				// It should stop without throwing when it finds a symbol like: + * \n.
@@ -144,7 +144,7 @@ namespace ArRobot {
 		}
 
 		return {
-			.offset = offset,
+			.offset = static_cast<std::size_t>(std::distance(numStr.begin(), it)),
 			.num    = static_cast<std::int32_t>(resNum),
 		};
 	}
